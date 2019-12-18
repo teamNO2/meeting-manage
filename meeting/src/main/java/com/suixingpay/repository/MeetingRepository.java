@@ -25,7 +25,11 @@ import java.util.List;
 @Repository
 public interface MeetingRepository {
     //按meeting-id查询
-    Meeting selectById(String meetingId);
+    public Meeting selectById(String meetingId);
+
+    //新建鑫管家发起的会议
+    public int insert(Meeting meeting);
+
     //插入会议
     int insertSelective(Meeting meeting);
     //模糊查询

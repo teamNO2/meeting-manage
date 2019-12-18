@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.suixingpay.repository.BackgroundRepository" >
 
-    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Meeting" >
+    <resultMap id="MeetingResultMap" type="com.suixingpay.entity.Meeting" >
         <id column="meeting_id" property="meetingId" jdbcType="INTEGER" />
         <result column="meeting_type" property="meetingType" jdbcType="INTEGER" />
         <result column="meeting_name" property="meetingName" jdbcType="VARCHAR" />
@@ -20,6 +20,7 @@
         <result column="user_id" property="userId" jdbcType="INTEGER" />
         <result column="meeting_applypersonnumber" property="meetingApplypersonnumber" jdbcType="INTEGER" />
         <result column="meeting_signpersonnumber" property="meetingSignpersonnumber" jdbcType="INTEGER" />
+        <result column="start_type" property="startType" jdbcType="INTEGER" />
         <collection property="usersList" ofType="com.suixingpay.entity.Users" column="user_id">
             <id column="id" property="id" jdbcType="INTEGER" />
             <result column="user_id" property="userId" jdbcType="VARCHAR" />
@@ -40,14 +41,131 @@
         </collection>
     </resultMap>
 
-    <select id="backgroundSelectAll" resultMap="BaseResultMap">
+    <resultMap id="ApplyResultMap" type="com.suixingpay.entity.Apply" >
+        <id column="apply_id" property="applyId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="meeting_id" property="meetingId" jdbcType="INTEGER" />
+        <result column="apply_issign" property="applyIssign" jdbcType="INTEGER" />
+        <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+        <collection property="usersList" ofType="com.suixingpay.entity.Users" column="user_id">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="user_id" property="userId" jdbcType="VARCHAR" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+            <result column="root_user_id" property="rootUserId" jdbcType="VARCHAR" />
+            <result column="p_user_id" property="pUserId" jdbcType="VARCHAR" />
+            <result column="referral_code" property="referralCode" jdbcType="VARCHAR" />
+            <result column="level_no" property="levelNo" jdbcType="CHAR" />
+            <result column="user_province" property="userProvince" jdbcType="VARCHAR" />
+            <result column="user_city" property="userCity" jdbcType="VARCHAR" />
+            <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+            <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+            <result column="status" property="status" jdbcType="CHAR" />
+            <result column="USER" property="USER" jdbcType="CHAR" />
+            <result column="CURRENT_CONNECTIONS" property="CURRENTCONNECTIONS" jdbcType="BIGINT" />
+            <result column="TOTAL_CONNECTIONS" property="TOTALCONNECTIONS" jdbcType="BIGINT" />
+        </collection>
+    </resultMap>
+
+    <resultMap id="SignResultMap" type="com.suixingpay.entity.Sign" >
+        <id column="sign_id" property="signId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="meeting_id" property="meetingId" jdbcType="INTEGER" />
+        <result column="sign_isapply" property="signIsapply" jdbcType="INTEGER" />
+        <result column="sign_time" property="signTime" jdbcType="TIMESTAMP" />
+        <collection property="usersList" ofType="com.suixingpay.entity.Users" column="user_id">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="user_id" property="userId" jdbcType="VARCHAR" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+            <result column="root_user_id" property="rootUserId" jdbcType="VARCHAR" />
+            <result column="p_user_id" property="pUserId" jdbcType="VARCHAR" />
+            <result column="referral_code" property="referralCode" jdbcType="VARCHAR" />
+            <result column="level_no" property="levelNo" jdbcType="CHAR" />
+            <result column="user_province" property="userProvince" jdbcType="VARCHAR" />
+            <result column="user_city" property="userCity" jdbcType="VARCHAR" />
+            <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+            <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+            <result column="status" property="status" jdbcType="CHAR" />
+            <result column="USER" property="USER" jdbcType="CHAR" />
+            <result column="CURRENT_CONNECTIONS" property="CURRENTCONNECTIONS" jdbcType="BIGINT" />
+            <result column="TOTAL_CONNECTIONS" property="TOTALCONNECTIONS" jdbcType="BIGINT" />
+        </collection>
+    </resultMap>
+
+    <!--
+    张佳鑫
+    后台管理查询所有会议
+    -->
+
+    <select id="backgroundSelectAll" resultMap="MeetingResultMap">
         select m.meeting_id,m.start_type,u.user_name,u.referral_code,m.meeting_name,
         m.meeting_type,m.meeting_salary,m.meeting_date,m.meeting_endtime,m.meeting_checkstatus,
         m.meeting_status
         from meeting m ,users u
         where m.user_id = u.user_id
-        ORDER BY meeting_id
+        ORDER BY meeting_id desc
     </select>
 
+    <!--
+    张佳鑫
+    后台管理查询会议详细
+    -->
+
+    <select id="backgroundSelectById1" resultMap="MeetingResultMap" parameterType="java.lang.Integer">
+        select m.meeting_id,m.start_type,u.user_name,u.referral_code,m.meeting_name,m.meeting_create,
+        m.meeting_salary,m.meeting_date,m.meeting_starttime,m.meeting_address,m.meeting_alladdress,
+        m.meeting_endtime,m.meeting_describe,m.meeting_checkstatus,
+        m.meeting_status
+        from meeting m ,users u
+        where m.meeting_id = #{meetingId} and
+        m.user_id = u.user_id
+
+    </select>
+
+    <select id="backgroundSelectById2" resultMap="ApplyResultMap" parameterType="java.lang.Integer">
+        select a.apply_id,u.referral_code,u.telephone,u.user_name,u.user_province,u.user_city,
+        a.apply_time,a.apply_issign
+        from apply a ,users u
+        where a.meeting_id = #{meetingId}
+        and a.user_id = u.user_id
+    </select>
+
+    <select id="backgroundSelectById3" resultMap="SignResultMap" parameterType="java.lang.Integer">
+        select s.sign_id,u.referral_code,u.telephone,u.user_name,u.user_province,u.user_city,
+        s.sign_time,s.sign_isapply
+        from sign s ,users u
+        where s.meeting_id = #{meetingId}
+        and s.user_id = u.user_id
+    </select>
+
+    <!--
+    张佳鑫
+    后台管理审核会议
+    -->
+
+    <select id="backgroundUpdateStatus0" parameterType="java.lang.Integer">
+        update `meeting`
+        <set >
+                `meeting_checkstatus` =0
+        </set>
+        where meeting_id = #{meetingId}
+    </select>
+
+    <select id="backgroundUpdateStatus1" parameterType="java.lang.Integer">
+        update `meeting`
+        <set >
+                `meeting_checkstatus` =1
+        </set>
+        where meeting_id = #{meetingId}
+    </select>
+
+    <select id="backgroundUpdateStatus2"  parameterType="java.lang.Integer">
+        update `meeting`
+        <set >
+                `meeting_checkstatus` =2
+        </set>
+        where meeting_id = #{meetingId}
+    </select>
 
 </mapper>

@@ -7,11 +7,12 @@
         <result column="user_id" property="userId" jdbcType="VARCHAR" />
         <result column="meeting_id" property="meetingId" jdbcType="INTEGER" />
         <result column="apply_issign" property="applyIssign" jdbcType="INTEGER" />
+        <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
 
     <sql id="Base_Column_List" >
-        `apply_id`,`user_id`,`meeting_id`,`apply_issign`
+        `apply_id`,`user_id`,`meeting_id`,`apply_issign`,`apply_time`
     </sql>
 
 
@@ -22,8 +23,8 @@
 
 
     <insert id="insert" parameterType="com.suixingpay.entity.Apply" >
-        insert into `apply` (`apply_id`,`user_id`,`meeting_id`,`apply_issign`)
-        values (#{applyId,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR},#{meetingId,jdbcType=INTEGER},#{applyIssign,jdbcType=INTEGER})
+        insert into `apply` (`apply_id`,`user_id`,`meeting_id`,`apply_issign`,`apply_time`)
+        values (#{applyId,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR},#{meetingId,jdbcType=INTEGER},#{applyIssign,jdbcType=INTEGER},#{applyTime,jdbcType=TIMESTAMP})
     </insert>
 
 
@@ -42,6 +43,9 @@
             <if test="applyIssign != null or applyIssign == 0" >
                 `apply_issign`,
             </if>
+            <if test="applyTime != null" >
+                `apply_time`,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="applyId != null or applyId == 0" >
@@ -55,6 +59,9 @@
             </if>
             <if test="applyIssign != null or applyIssign == 0" >
                 #{applyIssign,jdbcType=INTEGER},
+            </if>
+            <if test="applyTime != null" >
+                #{applyTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -72,6 +79,9 @@
             <if test="applyIssign != null or applyIssign == 0" >
                 `apply_issign` = #{applyIssign,jdbcType=INTEGER},
             </if>
+            <if test="applyTime != null" >
+                `apply_time` = #{applyTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where `apply_id` = #{applyId,jdbcType=INTEGER}
     </update>
@@ -81,7 +91,8 @@
         update `apply` set
         `user_id` = #{userId,jdbcType=VARCHAR},
         `meeting_id` = #{meetingId,jdbcType=INTEGER},
-        `apply_issign` = #{applyIssign,jdbcType=INTEGER}
+        `apply_issign` = #{applyIssign,jdbcType=INTEGER},
+        `apply_time` = #{applyTime,jdbcType=TIMESTAMP}
         where `apply_id` = #{applyId,jdbcType=INTEGER}
     </update>
 
@@ -108,6 +119,9 @@
             <if test="applyIssign != null or applyIssign == 0" >
                 and `apply_issign` = #{applyIssign,jdbcType=INTEGER}
             </if>
+            <if test="applyTime != null" >
+                and `apply_time` = #{applyTime,jdbcType=TIMESTAMP}
+            </if>
 
             <if test="null != likes">
                 <foreach collection="likes.keys" item="k" separator=" ">
@@ -123,11 +137,18 @@
                     <if test='k == "applyIssign" and likes[k] != null'>
                         and `apply_issign` like concat('%', #{likes.applyIssign,jdbcType=INTEGER}, '%')
                     </if>
+                    <if test='k == "applyTime" and likes[k] != null'>
+                        and `apply_time` like concat('%', #{likes.applyTime,jdbcType=TIMESTAMP}, '%')
+                    </if>
                 </foreach>
             </if>
 
             <if test="null != dates">
                 <foreach collection="dates.keys" item="k" separator=" ">
+                    <if test='k == "applyTime" and dates[k] != null'>
+                        and ( `apply_time` >= date(#{dates.applyTime.begin})
+                        and date(#{dates.applyTime.end}) >= `apply_time` )
+                    </if>
                 </foreach>
             </if>
 
@@ -157,6 +178,12 @@
                             #{itemValue}
                         </foreach>
                     </if>
+                    <if test='k == "applyTime" and includes[k] != null'>
+                        and `apply_time` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
                 </foreach>
             </if>
         </where>
@@ -175,6 +202,9 @@
             </if>
             <if test="applyIssign != null or applyIssign == 0" >
                 and `apply_issign` like concat('%', #{applyIssign,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="applyTime != null" >
+                and `apply_time` like concat('%', #{applyTime,jdbcType=TIMESTAMP}, '%')
             </if>
         </where>
     </sql>
@@ -195,6 +225,9 @@
                 </if>
                 <if test='k == "applyIssign"'>
                     `apply_issign`
+                </if>
+                <if test='k == "applyTime"'>
+                    `apply_time`
                 </if>
                 <if test='orders[k] == "asc"'>
                     ASC

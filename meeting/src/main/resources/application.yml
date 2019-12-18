@@ -2,9 +2,9 @@ spring:
   datasource:
     #数据源基本配置哈哈
     username: root
-    password: root
+    password: 123
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/meeting-manage?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://www.wzdnn.com:3306/meeting-manage?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
 
 mybatis:
