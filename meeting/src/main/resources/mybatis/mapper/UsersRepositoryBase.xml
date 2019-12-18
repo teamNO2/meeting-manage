@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suixingpay.repository.UsersRepository" >
+
+    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Users" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        <result column="root_user_id" property="rootUserId" jdbcType="VARCHAR" />
+        <result column="p_user_id" property="pUserId" jdbcType="VARCHAR" />
+        <result column="referral_code" property="referralCode" jdbcType="VARCHAR" />
+        <result column="level_no" property="levelNo" jdbcType="CHAR" />
+        <result column="user_province" property="userProvince" jdbcType="VARCHAR" />
+        <result column="user_city" property="userCity" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="CHAR" />
+        <result column="USER" property="USER" jdbcType="CHAR" />
+        <result column="CURRENT_CONNECTIONS" property="CURRENTCONNECTIONS" jdbcType="BIGINT" />
+        <result column="TOTAL_CONNECTIONS" property="TOTALCONNECTIONS" jdbcType="BIGINT" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `id`,`user_id`,`user_name`,`telephone`,`root_user_id`,`p_user_id`,`referral_code`,`level_no`,`user_province`,`user_city`,`create_date`,`update_date`,`status`,`USER`,`CURRENT_CONNECTIONS`,`TOTAL_CONNECTIONS`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from `users`
+        where `id` = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.suixingpay.entity.Users" >
+        insert into `users` (`id`,`user_id`,`user_name`,`telephone`,`root_user_id`,`p_user_id`,`referral_code`,`level_no`,`user_province`,`user_city`,`create_date`,`update_date`,`status`,`USER`,`CURRENT_CONNECTIONS`,`TOTAL_CONNECTIONS`)
+        values (#{id,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{telephone,jdbcType=VARCHAR},#{rootUserId,jdbcType=VARCHAR},#{pUserId,jdbcType=VARCHAR},#{referralCode,jdbcType=VARCHAR},#{levelNo,jdbcType=CHAR},#{userProvince,jdbcType=VARCHAR},#{userCity,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{updateDate,jdbcType=TIMESTAMP},#{status,jdbcType=CHAR},#{USER,jdbcType=CHAR},#{CURRENTCONNECTIONS,jdbcType=BIGINT},#{TOTALCONNECTIONS,jdbcType=BIGINT})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.suixingpay.entity.Users" >
+        insert into `users`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null or id == 0" >
+                `id`,
+            </if>
+            <if test="userId != null" >
+                `user_id`,
+            </if>
+            <if test="userName != null" >
+                `user_name`,
+            </if>
+            <if test="telephone != null" >
+                `telephone`,
+            </if>
+            <if test="rootUserId != null" >
+                `root_user_id`,
+            </if>
+            <if test="pUserId != null" >
+                `p_user_id`,
+            </if>
+            <if test="referralCode != null" >
+                `referral_code`,
+            </if>
+            <if test="levelNo != null" >
+                `level_no`,
+            </if>
+            <if test="userProvince != null" >
+                `user_province`,
+            </if>
+            <if test="userCity != null" >
+                `user_city`,
+            </if>
+            <if test="createDate != null" >
+                `create_date`,
+            </if>
+            <if test="updateDate != null" >
+                `update_date`,
+            </if>
+            <if test="status != null" >
+                `status`,
+            </if>
+            <if test="USER != null" >
+                `USER`,
+            </if>
+            <if test="CURRENTCONNECTIONS != null" >
+                `CURRENT_CONNECTIONS`,
+            </if>
+            <if test="TOTALCONNECTIONS != null" >
+                `TOTAL_CONNECTIONS`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null or id == 0" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null" >
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="rootUserId != null" >
+                #{rootUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="pUserId != null" >
+                #{pUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="referralCode != null" >
+                #{referralCode,jdbcType=VARCHAR},
+            </if>
+            <if test="levelNo != null" >
+                #{levelNo,jdbcType=CHAR},
+            </if>
+            <if test="userProvince != null" >
+                #{userProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="userCity != null" >
+                #{userCity,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="USER != null" >
+                #{USER,jdbcType=CHAR},
+            </if>
+            <if test="CURRENTCONNECTIONS != null" >
+                #{CURRENTCONNECTIONS,jdbcType=BIGINT},
+            </if>
+            <if test="TOTALCONNECTIONS != null" >
+                #{TOTALCONNECTIONS,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.suixingpay.entity.Users" >
+        update `users`
+        <set >
+            <if test="userId != null" >
+                `user_id` = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                `user_name` = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null" >
+                `telephone` = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="rootUserId != null" >
+                `root_user_id` = #{rootUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="pUserId != null" >
+                `p_user_id` = #{pUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="referralCode != null" >
+                `referral_code` = #{referralCode,jdbcType=VARCHAR},
+            </if>
+            <if test="levelNo != null" >
+                `level_no` = #{levelNo,jdbcType=CHAR},
+            </if>
+            <if test="userProvince != null" >
+                `user_province` = #{userProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="userCity != null" >
+                `user_city` = #{userCity,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                `create_date` = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                `update_date` = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                `status` = #{status,jdbcType=CHAR},
+            </if>
+            <if test="USER != null" >
+                `USER` = #{USER,jdbcType=CHAR},
+            </if>
+            <if test="CURRENTCONNECTIONS != null" >
+                `CURRENT_CONNECTIONS` = #{CURRENTCONNECTIONS,jdbcType=BIGINT},
+            </if>
+            <if test="TOTALCONNECTIONS != null" >
+                `TOTAL_CONNECTIONS` = #{TOTALCONNECTIONS,jdbcType=BIGINT},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.suixingpay.entity.Users" >
+        update `users` set
+        `user_id` = #{userId,jdbcType=VARCHAR},
+        `user_name` = #{userName,jdbcType=VARCHAR},
+        `telephone` = #{telephone,jdbcType=VARCHAR},
+        `root_user_id` = #{rootUserId,jdbcType=VARCHAR},
+        `p_user_id` = #{pUserId,jdbcType=VARCHAR},
+        `referral_code` = #{referralCode,jdbcType=VARCHAR},
+        `level_no` = #{levelNo,jdbcType=CHAR},
+        `user_province` = #{userProvince,jdbcType=VARCHAR},
+        `user_city` = #{userCity,jdbcType=VARCHAR},
+        `create_date` = #{createDate,jdbcType=TIMESTAMP},
+        `update_date` = #{updateDate,jdbcType=TIMESTAMP},
+        `status` = #{status,jdbcType=CHAR},
+        `USER` = #{USER,jdbcType=CHAR},
+        `CURRENT_CONNECTIONS` = #{CURRENTCONNECTIONS,jdbcType=BIGINT},
+        `TOTAL_CONNECTIONS` = #{TOTALCONNECTIONS,jdbcType=BIGINT}
+        where `id` = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `users`
+        where `id` = #{id,jdbcType=INTEGER}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="id != null or id == 0" >
+                and `id` = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null" >
+                and `user_id` = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="userName != null" >
+                and `user_name` = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="telephone != null" >
+                and `telephone` = #{telephone,jdbcType=VARCHAR}
+            </if>
+            <if test="rootUserId != null" >
+                and `root_user_id` = #{rootUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="pUserId != null" >
+                and `p_user_id` = #{pUserId,jdbcType=VARCHAR}
+            </if>
+            <if test="referralCode != null" >
+                and `referral_code` = #{referralCode,jdbcType=VARCHAR}
+            </if>
+            <if test="levelNo != null" >
+                and `level_no` = #{levelNo,jdbcType=CHAR}
+            </if>
+            <if test="userProvince != null" >
+                and `user_province` = #{userProvince,jdbcType=VARCHAR}
+            </if>
+            <if test="userCity != null" >
+                and `user_city` = #{userCity,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null" >
+                and `create_date` = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null" >
+                and `update_date` = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="status != null" >
+                and `status` = #{status,jdbcType=CHAR}
+            </if>
+            <if test="USER != null" >
+                and `USER` = #{USER,jdbcType=CHAR}
+            </if>
+            <if test="CURRENTCONNECTIONS != null" >
+                and `CURRENT_CONNECTIONS` = #{CURRENTCONNECTIONS,jdbcType=BIGINT}
+            </if>
+            <if test="TOTALCONNECTIONS != null" >
+                and `TOTAL_CONNECTIONS` = #{TOTALCONNECTIONS,jdbcType=BIGINT}
+            </if>
+
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "id" and likes[k] != null'>
+                        and `id` like concat('%', #{likes.id,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "userId" and likes[k] != null'>
+                        and `user_id` like concat('%', #{likes.userId,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "userName" and likes[k] != null'>
+                        and `user_name` like concat('%', #{likes.userName,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "telephone" and likes[k] != null'>
+                        and `telephone` like concat('%', #{likes.telephone,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "rootUserId" and likes[k] != null'>
+                        and `root_user_id` like concat('%', #{likes.rootUserId,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "pUserId" and likes[k] != null'>
+                        and `p_user_id` like concat('%', #{likes.pUserId,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "referralCode" and likes[k] != null'>
+                        and `referral_code` like concat('%', #{likes.referralCode,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "levelNo" and likes[k] != null'>
+                        and `level_no` like concat('%', #{likes.levelNo,jdbcType=CHAR}, '%')
+                    </if>
+                    <if test='k == "userProvince" and likes[k] != null'>
+                        and `user_province` like concat('%', #{likes.userProvince,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "userCity" and likes[k] != null'>
+                        and `user_city` like concat('%', #{likes.userCity,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "createDate" and likes[k] != null'>
+                        and `create_date` like concat('%', #{likes.createDate,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                    <if test='k == "updateDate" and likes[k] != null'>
+                        and `update_date` like concat('%', #{likes.updateDate,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                    <if test='k == "status" and likes[k] != null'>
+                        and `status` like concat('%', #{likes.status,jdbcType=CHAR}, '%')
+                    </if>
+                    <if test='k == "USER" and likes[k] != null'>
+                        and `USER` like concat('%', #{likes.USER,jdbcType=CHAR}, '%')
+                    </if>
+                    <if test='k == "CURRENTCONNECTIONS" and likes[k] != null'>
+                        and `CURRENT_CONNECTIONS` like concat('%', #{likes.CURRENTCONNECTIONS,jdbcType=BIGINT}, '%')
+                    </if>
+                    <if test='k == "TOTALCONNECTIONS" and likes[k] != null'>
+                        and `TOTAL_CONNECTIONS` like concat('%', #{likes.TOTALCONNECTIONS,jdbcType=BIGINT}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != dates">
+                <foreach collection="dates.keys" item="k" separator=" ">
+                    <if test='k == "createDate" and dates[k] != null'>
+                        and ( `create_date` >= date(#{dates.createDate.begin})
+                        and date(#{dates.createDate.end}) >= `create_date` )
+                    </if>
+                    <if test='k == "updateDate" and dates[k] != null'>
+                        and ( `update_date` >= date(#{dates.updateDate.begin})
+                        and date(#{dates.updateDate.end}) >= `update_date` )
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != includes">
+                <foreach collection="includes.keys" item="k" separator=" ">
+                    <if test='k == "id" and includes[k] != null'>
+                        and `id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "userId" and includes[k] != null'>
+                        and `user_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "userName" and includes[k] != null'>
+                        and `user_name` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "telephone" and includes[k] != null'>
+                        and `telephone` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "rootUserId" and includes[k] != null'>
+                        and `root_user_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "pUserId" and includes[k] != null'>
+                        and `p_user_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "referralCode" and includes[k] != null'>
+                        and `referral_code` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "levelNo" and includes[k] != null'>
+                        and `level_no` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "userProvince" and includes[k] != null'>
+                        and `user_province` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "userCity" and includes[k] != null'>
+                        and `user_city` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "createDate" and includes[k] != null'>
+                        and `create_date` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "updateDate" and includes[k] != null'>
+                        and `update_date` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "status" and includes[k] != null'>
+                        and `status` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "USER" and includes[k] != null'>
+                        and `USER` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "CURRENTCONNECTIONS" and includes[k] != null'>
+                        and `CURRENT_CONNECTIONS` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "TOTALCONNECTIONS" and includes[k] != null'>
+                        and `TOTAL_CONNECTIONS` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="id != null or id == 0" >
+                and `id` like concat('%', #{id,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="userId != null" >
+                and `user_id` like concat('%', #{userId,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="userName != null" >
+                and `user_name` like concat('%', #{userName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="telephone != null" >
+                and `telephone` like concat('%', #{telephone,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="rootUserId != null" >
+                and `root_user_id` like concat('%', #{rootUserId,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="pUserId != null" >
+                and `p_user_id` like concat('%', #{pUserId,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="referralCode != null" >
+                and `referral_code` like concat('%', #{referralCode,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="levelNo != null" >
+                and `level_no` like concat('%', #{levelNo,jdbcType=CHAR}, '%')
+            </if>
+            <if test="userProvince != null" >
+                and `user_province` like concat('%', #{userProvince,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="userCity != null" >
+                and `user_city` like concat('%', #{userCity,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="createDate != null" >
+                and `create_date` like concat('%', #{createDate,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="updateDate != null" >
+                and `update_date` like concat('%', #{updateDate,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="status != null" >
+                and `status` like concat('%', #{status,jdbcType=CHAR}, '%')
+            </if>
+            <if test="USER != null" >
+                and `USER` like concat('%', #{USER,jdbcType=CHAR}, '%')
+            </if>
+            <if test="CURRENTCONNECTIONS != null" >
+                and `CURRENT_CONNECTIONS` like concat('%', #{CURRENTCONNECTIONS,jdbcType=BIGINT}, '%')
+            </if>
+            <if test="TOTALCONNECTIONS != null" >
+                and `TOTAL_CONNECTIONS` like concat('%', #{TOTALCONNECTIONS,jdbcType=BIGINT}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "id"'>
+                    `id`
+                </if>
+                <if test='k == "userId"'>
+                    `user_id`
+                </if>
+                <if test='k == "userName"'>
+                    `user_name`
+                </if>
+                <if test='k == "telephone"'>
+                    `telephone`
+                </if>
+                <if test='k == "rootUserId"'>
+                    `root_user_id`
+                </if>
+                <if test='k == "pUserId"'>
+                    `p_user_id`
+                </if>
+                <if test='k == "referralCode"'>
+                    `referral_code`
+                </if>
+                <if test='k == "levelNo"'>
+                    `level_no`
+                </if>
+                <if test='k == "userProvince"'>
+                    `user_province`
+                </if>
+                <if test='k == "userCity"'>
+                    `user_city`
+                </if>
+                <if test='k == "createDate"'>
+                    `create_date`
+                </if>
+                <if test='k == "updateDate"'>
+                    `update_date`
+                </if>
+                <if test='k == "status"'>
+                    `status`
+                </if>
+                <if test='k == "USER"'>
+                    `USER`
+                </if>
+                <if test='k == "CURRENTCONNECTIONS"'>
+                    `CURRENT_CONNECTIONS`
+                </if>
+                <if test='k == "TOTALCONNECTIONS"'>
+                    `TOTAL_CONNECTIONS`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="com.suixingpay.entity.Users" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `users`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="com.suixingpay.entity.Users" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `users`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="com.suixingpay.entity.Users" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `users`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="com.suixingpay.entity.Users" resultType="java.lang.Integer" >
+        select count(1)
+        from `users`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Users" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `users`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="com.suixingpay.entity.Users" resultType="java.lang.Integer" >
+        select count(1)
+        from `users`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>

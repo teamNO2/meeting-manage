@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suixingpay.repository.ApplyRepository" >
+
+    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Apply" >
+        <id column="apply_id" property="applyId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="meeting_id" property="meetingId" jdbcType="INTEGER" />
+        <result column="apply_issign" property="applyIssign" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `apply_id`,`user_id`,`meeting_id`,`apply_issign`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from `apply`
+        where `apply_id` = #{applyId,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.suixingpay.entity.Apply" >
+        insert into `apply` (`apply_id`,`user_id`,`meeting_id`,`apply_issign`)
+        values (#{applyId,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR},#{meetingId,jdbcType=INTEGER},#{applyIssign,jdbcType=INTEGER})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.suixingpay.entity.Apply" >
+        insert into `apply`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="applyId != null or applyId == 0" >
+                `apply_id`,
+            </if>
+            <if test="userId != null" >
+                `user_id`,
+            </if>
+            <if test="meetingId != null or meetingId == 0" >
+                `meeting_id`,
+            </if>
+            <if test="applyIssign != null or applyIssign == 0" >
+                `apply_issign`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="applyId != null or applyId == 0" >
+                #{applyId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="meetingId != null or meetingId == 0" >
+                #{meetingId,jdbcType=INTEGER},
+            </if>
+            <if test="applyIssign != null or applyIssign == 0" >
+                #{applyIssign,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.suixingpay.entity.Apply" >
+        update `apply`
+        <set >
+            <if test="userId != null" >
+                `user_id` = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="meetingId != null or meetingId == 0" >
+                `meeting_id` = #{meetingId,jdbcType=INTEGER},
+            </if>
+            <if test="applyIssign != null or applyIssign == 0" >
+                `apply_issign` = #{applyIssign,jdbcType=INTEGER},
+            </if>
+        </set>
+        where `apply_id` = #{applyId,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.suixingpay.entity.Apply" >
+        update `apply` set
+        `user_id` = #{userId,jdbcType=VARCHAR},
+        `meeting_id` = #{meetingId,jdbcType=INTEGER},
+        `apply_issign` = #{applyIssign,jdbcType=INTEGER}
+        where `apply_id` = #{applyId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `apply`
+        where `apply_id` = #{applyId,jdbcType=INTEGER}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="applyId != null or applyId == 0" >
+                and `apply_id` = #{applyId,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null" >
+                and `user_id` = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="meetingId != null or meetingId == 0" >
+                and `meeting_id` = #{meetingId,jdbcType=INTEGER}
+            </if>
+            <if test="applyIssign != null or applyIssign == 0" >
+                and `apply_issign` = #{applyIssign,jdbcType=INTEGER}
+            </if>
+
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "applyId" and likes[k] != null'>
+                        and `apply_id` like concat('%', #{likes.applyId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "userId" and likes[k] != null'>
+                        and `user_id` like concat('%', #{likes.userId,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "meetingId" and likes[k] != null'>
+                        and `meeting_id` like concat('%', #{likes.meetingId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "applyIssign" and likes[k] != null'>
+                        and `apply_issign` like concat('%', #{likes.applyIssign,jdbcType=INTEGER}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != dates">
+                <foreach collection="dates.keys" item="k" separator=" ">
+                </foreach>
+            </if>
+
+            <if test="null != includes">
+                <foreach collection="includes.keys" item="k" separator=" ">
+                    <if test='k == "applyId" and includes[k] != null'>
+                        and `apply_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "userId" and includes[k] != null'>
+                        and `user_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "meetingId" and includes[k] != null'>
+                        and `meeting_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "applyIssign" and includes[k] != null'>
+                        and `apply_issign` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="applyId != null or applyId == 0" >
+                and `apply_id` like concat('%', #{applyId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="userId != null" >
+                and `user_id` like concat('%', #{userId,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="meetingId != null or meetingId == 0" >
+                and `meeting_id` like concat('%', #{meetingId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="applyIssign != null or applyIssign == 0" >
+                and `apply_issign` like concat('%', #{applyIssign,jdbcType=INTEGER}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "applyId"'>
+                    `apply_id`
+                </if>
+                <if test='k == "userId"'>
+                    `user_id`
+                </if>
+                <if test='k == "meetingId"'>
+                    `meeting_id`
+                </if>
+                <if test='k == "applyIssign"'>
+                    `apply_issign`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="com.suixingpay.entity.Apply" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `apply`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="com.suixingpay.entity.Apply" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `apply`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="com.suixingpay.entity.Apply" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `apply`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="com.suixingpay.entity.Apply" resultType="java.lang.Integer" >
+        select count(1)
+        from `apply`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Apply" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `apply`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="com.suixingpay.entity.Apply" resultType="java.lang.Integer" >
+        select count(1)
+        from `apply`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>
