@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suixingpay.repository.BackgroundRepository" >
+
+    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Meeting" >
+        <id column="meeting_id" property="meetingId" jdbcType="INTEGER" />
+        <result column="meeting_type" property="meetingType" jdbcType="INTEGER" />
+        <result column="meeting_name" property="meetingName" jdbcType="VARCHAR" />
+        <result column="meeting_create" property="meetingCreate" jdbcType="VARCHAR" />
+        <result column="meeting_salary" property="meetingSalary" jdbcType="INTEGER" />
+        <result column="meeting_date" property="meetingDate" jdbcType="TIMESTAMP" />
+        <result column="meeting_starttime" property="meetingStarttime" jdbcType="TIMESTAMP" />
+        <result column="meeting_timelong" property="meetingTimelong" jdbcType="DOUBLE" />
+        <result column="meeting_endtime" property="meetingEndtime" jdbcType="TIMESTAMP" />
+        <result column="meeting_address" property="meetingAddress" jdbcType="VARCHAR" />
+        <result column="meeting_alladdress" property="meetingAlladdress" jdbcType="VARCHAR" />
+        <result column="meeting_describe" property="meetingDescribe" jdbcType="VARCHAR" />
+        <result column="meeting_checkstatus" property="meetingCheckstatus" jdbcType="INTEGER" />
+        <result column="meeting_status" property="meetingStatus" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="meeting_applypersonnumber" property="meetingApplypersonnumber" jdbcType="INTEGER" />
+        <result column="meeting_signpersonnumber" property="meetingSignpersonnumber" jdbcType="INTEGER" />
+        <collection property="usersList" ofType="com.suixingpay.entity.Users" column="user_id">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="user_id" property="userId" jdbcType="VARCHAR" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+            <result column="root_user_id" property="rootUserId" jdbcType="VARCHAR" />
+            <result column="p_user_id" property="pUserId" jdbcType="VARCHAR" />
+            <result column="referral_code" property="referralCode" jdbcType="VARCHAR" />
+            <result column="level_no" property="levelNo" jdbcType="CHAR" />
+            <result column="user_province" property="userProvince" jdbcType="VARCHAR" />
+            <result column="user_city" property="userCity" jdbcType="VARCHAR" />
+            <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+            <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+            <result column="status" property="status" jdbcType="CHAR" />
+            <result column="USER" property="USER" jdbcType="CHAR" />
+            <result column="CURRENT_CONNECTIONS" property="CURRENTCONNECTIONS" jdbcType="BIGINT" />
+            <result column="TOTAL_CONNECTIONS" property="TOTALCONNECTIONS" jdbcType="BIGINT" />
+        </collection>
+    </resultMap>
+
+    <select id="backgroundSelectAll" resultMap="BaseResultMap">
+        select m.meeting_id,m.start_type,u.user_name,u.referral_code,m.meeting_name,
+        m.meeting_type,m.meeting_salary,m.meeting_date,m.meeting_endtime,m.meeting_checkstatus,
+        m.meeting_status
+        from meeting m ,users u
+        where m.user_id = u.user_id
+        ORDER BY meeting_id
+    </select>
+
+
+</mapper>

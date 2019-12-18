@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description:
@@ -64,4 +65,6 @@ public class Meeting {
     private Integer meetingSignpersonnumber;
     /** 发起类型（0盟友发起、1公司发起） **/
     private Integer startType;
+    /** 用户集合 **/
+    private List<Users> usersList;
 }
