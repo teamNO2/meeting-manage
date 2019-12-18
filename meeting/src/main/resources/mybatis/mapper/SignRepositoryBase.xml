@@ -7,11 +7,12 @@
         <result column="user_id" property="userId" jdbcType="VARCHAR" />
         <result column="meeting_id" property="meetingId" jdbcType="INTEGER" />
         <result column="sign_isapply" property="signIsapply" jdbcType="INTEGER" />
+        <result column="sign_time" property="signTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
 
     <sql id="Base_Column_List" >
-        `sign_id`,`user_id`,`meeting_id`,`sign_isapply`
+        `sign_id`,`user_id`,`meeting_id`,`sign_isapply`,`sign_time`
     </sql>
 
 
@@ -22,8 +23,8 @@
 
 
     <insert id="insert" parameterType="com.suixingpay.entity.Sign" >
-        insert into `sign` (`sign_id`,`user_id`,`meeting_id`,`sign_isapply`)
-        values (#{signId,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR},#{meetingId,jdbcType=INTEGER},#{signIsapply,jdbcType=INTEGER})
+        insert into `sign` (`sign_id`,`user_id`,`meeting_id`,`sign_isapply`,`sign_time`)
+        values (#{signId,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR},#{meetingId,jdbcType=INTEGER},#{signIsapply,jdbcType=INTEGER},#{signTime,jdbcType=TIMESTAMP})
     </insert>
 
 
@@ -42,6 +43,9 @@
             <if test="signIsapply != null or signIsapply == 0" >
                 `sign_isapply`,
             </if>
+            <if test="signTime != null" >
+                `sign_time`,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="signId != null or signId == 0" >
@@ -55,6 +59,9 @@
             </if>
             <if test="signIsapply != null or signIsapply == 0" >
                 #{signIsapply,jdbcType=INTEGER},
+            </if>
+            <if test="signTime != null" >
+                #{signTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -72,6 +79,9 @@
             <if test="signIsapply != null or signIsapply == 0" >
                 `sign_isapply` = #{signIsapply,jdbcType=INTEGER},
             </if>
+            <if test="signTime != null" >
+                `sign_time` = #{signTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where `sign_id` = #{signId,jdbcType=INTEGER}
     </update>
@@ -81,7 +91,8 @@
         update `sign` set
         `user_id` = #{userId,jdbcType=VARCHAR},
         `meeting_id` = #{meetingId,jdbcType=INTEGER},
-        `sign_isapply` = #{signIsapply,jdbcType=INTEGER}
+        `sign_isapply` = #{signIsapply,jdbcType=INTEGER},
+        `sign_time` = #{signTime,jdbcType=TIMESTAMP}
         where `sign_id` = #{signId,jdbcType=INTEGER}
     </update>
 
@@ -108,6 +119,9 @@
             <if test="signIsapply != null or signIsapply == 0" >
                 and `sign_isapply` = #{signIsapply,jdbcType=INTEGER}
             </if>
+            <if test="signTime != null" >
+                and `sign_time` = #{signTime,jdbcType=TIMESTAMP}
+            </if>
 
             <if test="null != likes">
                 <foreach collection="likes.keys" item="k" separator=" ">
@@ -123,11 +137,18 @@
                     <if test='k == "signIsapply" and likes[k] != null'>
                         and `sign_isapply` like concat('%', #{likes.signIsapply,jdbcType=INTEGER}, '%')
                     </if>
+                    <if test='k == "signTime" and likes[k] != null'>
+                        and `sign_time` like concat('%', #{likes.signTime,jdbcType=TIMESTAMP}, '%')
+                    </if>
                 </foreach>
             </if>
 
             <if test="null != dates">
                 <foreach collection="dates.keys" item="k" separator=" ">
+                    <if test='k == "signTime" and dates[k] != null'>
+                        and ( `sign_time` >= date(#{dates.signTime.begin})
+                        and date(#{dates.signTime.end}) >= `sign_time` )
+                    </if>
                 </foreach>
             </if>
 
@@ -157,6 +178,12 @@
                             #{itemValue}
                         </foreach>
                     </if>
+                    <if test='k == "signTime" and includes[k] != null'>
+                        and `sign_time` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
                 </foreach>
             </if>
         </where>
@@ -175,6 +202,9 @@
             </if>
             <if test="signIsapply != null or signIsapply == 0" >
                 and `sign_isapply` like concat('%', #{signIsapply,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="signTime != null" >
+                and `sign_time` like concat('%', #{signTime,jdbcType=TIMESTAMP}, '%')
             </if>
         </where>
     </sql>
@@ -195,6 +225,9 @@
                 </if>
                 <if test='k == "signIsapply"'>
                     `sign_isapply`
+                </if>
+                <if test='k == "signTime"'>
+                    `sign_time`
                 </if>
                 <if test='orders[k] == "asc"'>
                     ASC

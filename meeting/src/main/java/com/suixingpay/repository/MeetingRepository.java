@@ -24,4 +24,7 @@ public interface MeetingRepository {
 
     //按meeting-id查询
     public Meeting selectById(String meetingId);
+
+    //新建鑫管家发起的会议
+    public int insert(Meeting meeting);
 }
