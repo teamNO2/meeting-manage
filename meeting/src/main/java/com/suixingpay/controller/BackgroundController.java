@@ -5,6 +5,7 @@ import com.suixingpay.service.BackgroundService;
 import com.suixingpay.utils.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,6 +34,20 @@ public class BackgroundController {
         List<Meeting> meetingList = backgroundService.backgroundSelectAll();
         if (meetingList != null) {
             return () -> GenericResponse.success("666", "查询成功", meetingList);
+        } else {
+            return () -> GenericResponse.failed("666", "查询成功");
+        }
+    }
+
+    /*
+     * 张佳鑫
+     * 后台管理查询会议详细
+     */
+    @GetMapping("/backgroundSelectById/{meetingId}")
+    public Callable<GenericResponse> backgroundSelectById(@PathVariable("meetingId") String meetingId){
+        List<Meeting> meeting = backgroundService.backgroundSelectById(Integer.valueOf(meetingId));
+        if (meeting != null) {
+            return () -> GenericResponse.success("666", "查询成功", meeting);
         } else {
             return () -> GenericResponse.failed("666", "查询成功");
         }

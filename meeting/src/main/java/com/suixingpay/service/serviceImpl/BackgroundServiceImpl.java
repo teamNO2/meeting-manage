@@ -22,4 +22,9 @@ public class BackgroundServiceImpl implements BackgroundService {
     public List<Meeting> backgroundSelectAll() {
         return backgroundRepository.backgroundSelectAll();
     }
+
+    @Override
+    public List<Meeting> backgroundSelectById(Integer meetingId) {
+        return backgroundRepository.backgroundSelectById(meetingId);
+    }
 }

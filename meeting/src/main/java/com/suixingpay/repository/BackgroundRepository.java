@@ -15,4 +15,6 @@ public interface BackgroundRepository {
      * 后台管理查询所有会议
      */
     List<Meeting> backgroundSelectAll();
+
+    List<Meeting> backgroundSelectById(Integer meetingId);
 }
