@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface MeetingRepository {
-
     //按meeting-id查询
     public Meeting selectById(String meetingId);
+    int insertSelective(Meeting meeting);
 }

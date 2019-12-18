@@ -8,7 +8,10 @@
  */
 package com.suixingpay.repository;
 
+import com.suixingpay.entity.Meeting;
+import com.suixingpay.entity.Users;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,4 +23,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UsersRepository {
+    Users selectByName( String userName);
+
 }

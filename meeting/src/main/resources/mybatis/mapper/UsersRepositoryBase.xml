@@ -226,6 +226,8 @@
     </select>
 
 
+
+
     <sql id="findPageWithWhere" >
         <where> 1=1
             <if test="id != null or id == 0" >
@@ -613,7 +615,14 @@
         <include refid="findPageWithWhereLike" />
     </select>
 
-
+    <!--根据name查询user-->
+    <!--李常昊-->
+    <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        `user_id`
+        from  `users`
+        where `user_name` = #{userName}
+    </select>
 
 
 
