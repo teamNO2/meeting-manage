@@ -1,6 +1,8 @@
 package com.suixingpay.controller;
 
+import com.suixingpay.entity.Apply;
 import com.suixingpay.entity.Meeting;
+import com.suixingpay.entity.Sign;
 import com.suixingpay.service.BackgroundService;
 import com.suixingpay.utils.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Max;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -33,9 +36,9 @@ public class BackgroundController {
     public Callable<GenericResponse> backgroundSelectAll(){
         List<Meeting> meetingList = backgroundService.backgroundSelectAll();
         if (meetingList != null) {
-            return () -> GenericResponse.success("666", "查询成功", meetingList);
+            return () -> GenericResponse.success("666", "backgroundSelectAll查询成功", meetingList);
         } else {
-            return () -> GenericResponse.failed("666", "查询成功");
+            return () -> GenericResponse.failed("666", "backgroundSelectAll查询失败");
         }
     }
 
@@ -44,12 +47,33 @@ public class BackgroundController {
      * 后台管理查询会议详细
      */
     @GetMapping("/backgroundSelectById/{meetingId}")
-    public Callable<GenericResponse> backgroundSelectById(@PathVariable("meetingId") String meetingId){
-        List<Meeting> meeting = backgroundService.backgroundSelectById(Integer.valueOf(meetingId));
-        if (meeting != null) {
-            return () -> GenericResponse.success("666", "查询成功", meeting);
+    public Callable<GenericResponse> backgroundSelectById1(@PathVariable("meetingId") String meetingId){
+        List<Meeting> meetingList = backgroundService.backgroundSelectById1(Integer.valueOf(meetingId));
+        List<Apply> applyList = backgroundService.backgroundSelectById2(Integer.valueOf(meetingId));
+        List<Sign> signList = backgroundService.backgroundSelectById3(Integer.valueOf(meetingId));
+        List<Object> list = new ArrayList<>();
+        list.addAll(meetingList);
+        list.addAll(applyList);
+        list.addAll(signList);
+        if (list != null) {
+            return () -> GenericResponse.success("666", "backgroundSelectById查询成功", list);
         } else {
-            return () -> GenericResponse.failed("666", "查询成功");
+            return () -> GenericResponse.failed("666", "backgroundSelectById查询失败");
+        }
+    }
+
+    /*
+     * 张佳鑫
+     * 后台管理审核会议
+     */
+    @GetMapping("/backgroundUpdateStatus/{meetingId}/{check}")
+    public Callable<GenericResponse> backgroundUpdateStatus(@PathVariable("meetingId") String meetingId, @PathVariable("check") String check){
+        System.out.println(check);
+        Integer num = backgroundService.backgroundUpdateStatus(Integer.valueOf(meetingId),Integer.valueOf(check));
+        if (num != null) {
+            return () -> GenericResponse.success("666", "backgroundUpdateStatus修改成功", num);
+        } else {
+            return () -> GenericResponse.failed("666", "backgroundUpdateStatus修改失败");
         }
     }
 

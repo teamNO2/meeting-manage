@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description:
@@ -38,4 +39,6 @@ public class Sign {
     private Integer signIsapply;
     /** 签到时间 **/
     private Date signTime;
+    /** 用户集合 **/
+    private List<Users> usersList;
 }
