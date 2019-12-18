@@ -12,6 +12,9 @@ import com.suixingpay.entity.Meeting;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @description:
  * @author: 孙克强<sun_kq@suixingpay.com>
@@ -22,6 +25,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MeetingRepository {
     //按meeting-id查询
-    public Meeting selectById(String meetingId);
+    Meeting selectById(String meetingId);
+    //插入会议
     int insertSelective(Meeting meeting);
+    //模糊查询
+    List<Meeting> findMeetingWithLike(Meeting meeting);
+    //根据日期查询
+    List<Meeting> limitDate(Date beginDate,Date endDate);
 }

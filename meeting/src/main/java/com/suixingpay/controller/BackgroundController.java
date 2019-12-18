@@ -9,23 +9,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import com.suixingpay.entity.Meeting;
+import com.suixingpay.service.BackgroundService;
+import com.suixingpay.utils.GenericResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import javax.validation.constraints.Max;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+/*
+ * 后台管理
+ * 张佳鑫和李常昊
+ */
+@RestController
 @RequestMapping("/background")
 public class BackgroundController {
     @Autowired
     private BackgroundService backgroundService;
 
+
+
+
+
+    /**
+     * @Description: 管理员创建会议
+     * @Param: [map]
+     * @return: java.util.concurrent.Callable<com.suixingpay.utils.GenericResponse>
+     * @Author: lichanghao
+     * @Date: 2019/12/18
+     */
     @PostMapping("/createMeeting")
     @ResponseBody
     public Callable<GenericResponse> CreateMeeting(@RequestBody Map map)throws Exception{
+
         String name = (String)map.get("userName");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //判断前端是否传递空值
@@ -40,17 +67,21 @@ public class BackgroundController {
             return()->GenericResponse.failed("666", "鑫管家不存在，创建失败");
         }
 
-        Integer id  = users.getId();
-
+        String userId  = users.getUserId();
+        System.out.println(userId);
         int meetingId = (int)map.get("meetingId");
         //判空
         if (meetingId==0){
             return()->GenericResponse.failed("666", "meetingId，为空创建失败");
         }
+        Meeting meeting1 = backgroundService.selectById(String.valueOf(meetingId));
+        if(meeting1!=null){
+            return()->GenericResponse.failed("666", "会议已存在");
+        }
 
         int meetingType = (int)map.get("meetingType");
         //判空
-        if (meetingType==0){
+        if (meetingType==-1){
             return()->GenericResponse.failed("666", "meetingType，为空创建失败");
         }
 
@@ -111,7 +142,7 @@ public class BackgroundController {
         meeting.setMeetingEndtime(DmeetingEndtime);
         meeting.setMeetingId(meetingId);
         meeting.setMeetingSalary(meetingSalary);
-        meeting.setUserId(id);
+        meeting.setUserId(Integer.parseInt(userId));
         Date DmeetingStarttime = format.parse(meetingStarttime);
         meeting.setMeetingStarttime(DmeetingStarttime);
         meeting.setMeetingAddress(meetingAddress);
@@ -125,4 +156,93 @@ public class BackgroundController {
         }
 
     }
+
+
+    /*
+     * 张佳鑫
+     * 后台管理查询所有会议
+     */
+    @GetMapping("/backgroundSelectAll")
+    public Callable<GenericResponse> backgroundSelectAll(){
+        List<Meeting> meetingList = backgroundService.backgroundSelectAll();
+        if (meetingList != null) {
+            return () -> GenericResponse.success("666", "查询成功", meetingList);
+        } else {
+            return () -> GenericResponse.failed("666", "查询成功");
+        }
+    }
+
+    /**
+     * @Description: 模糊查询会议
+     * @Param: [map]
+     * @return: java.util.List<com.suixingpay.entity.Meeting>
+     * @Author: lichanghao
+     * @Date: 2019/12/18
+     */
+    @PostMapping("/selectMeetingWithLike")
+    @ResponseBody
+    public List<Meeting> selectMeetingWithLike(@RequestBody Map map)throws Exception{
+        Users users = new Users();
+        String referralCode =(String) map.get("referralCode");
+        users.setReferralCode(referralCode);
+        List<Users>usersList = backgroundService.findPageWithResultLike(users);
+
+        Meeting meeting = new Meeting();
+        List<Meeting> meetingList = new ArrayList<>();
+        List<Meeting> meetingList1 = null;
+        List<Meeting> meetingList2 = new ArrayList<>();
+        List<Meeting> meetingListAll = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String beginDate = (String)map.get("startDate");
+        String endDate = (String)map.get("endDate");
+        //当日期范围存在时
+        if (beginDate!=null&&endDate!=null) {
+            System.out.println("xingeshishabi");
+            Date date1 = format.parse(beginDate);
+            Date date2 = format.parse(endDate);
+            meetingList1 = backgroundService.limitDate(date1, date2);
+        }
+
+        String meetingSalary = (String)map.get("meetingSalary");
+        meeting.setMeetingSalary(Integer.valueOf(meetingSalary));
+        String meetingType = (String) map.get("meetingType");
+        //判空
+        if (meetingType!=null) {
+            meeting.setMeetingType(Integer.valueOf(meetingType));
+        }
+        String startType = (String) map.get("startType");
+        //判空
+        if (startType!=null) {
+            meeting.setStartType(Integer.valueOf(startType));
+        }
+        String meetingCheckstatus = (String) map.get("meetingCheckstatus");
+        //判空
+        if (meetingCheckstatus!=null) {
+            meeting.setMeetingCheckstatus(Integer.valueOf(meetingCheckstatus));
+        }
+        String meetingStatus = (String) map.get("meetingStatus");
+        //判空
+        if(meetingStatus!=null) {
+            meeting.setMeetingStatus(Integer.valueOf(meetingStatus));
+        }
+        meetingList2 = backgroundService.findPageWithResultLike(meeting);
+
+        if (meetingList1!=null){
+            System.out.println("caonima");
+            for (Meeting meeting1:meetingList1){
+                for (Meeting meeting2:meetingList2){
+                    if(meeting1.getMeetingId() == meeting2.getMeetingId()){
+                        meetingList.add(meeting1);
+                        break;
+                    }
+                }
+            }
+            meetingListAll = backgroundService.likeMeeting(meetingList, usersList);
+        }else {
+            meetingListAll= backgroundService.likeMeeting(meetingList2, usersList);
+
+        }
+        return meetingListAll;
+    }
+
 }

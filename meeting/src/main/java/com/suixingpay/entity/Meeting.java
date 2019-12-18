@@ -2,7 +2,7 @@
  * All rights Reserved, Designed By Suixingpay.
  *
  * @author: 孙克强<sun_kq@suixingpay.com>
- * @date: 2019/12/18 16:47
+ * @date: 2019/12/18 17:36
  * @Copyright: 2019 Suixingpay. All rights reserved.
  * 注意：本内容仅限于随行付支付有限公司内部传阅，禁止外泄以及用于其他的商业用途。
  */
@@ -15,11 +15,12 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description:
  * @author: 孙克强<sun_kq@suixingpay.com>
- * @date: 2019/12/18 16:47
+ * @date: 2019/12/18 17:36
  * @version: V1.0
  */
 @Data
@@ -30,7 +31,7 @@ import java.util.Date;
 public class Meeting {
     /**  **/
     private Integer meetingId;
-    /** 会议类型(0:公司发起，1：盟友发起....) **/
+    /** 会议类型（0培训会、1招商会....） **/
     private Integer meetingType;
     /** 会议名称 **/
     private String meetingName;
@@ -62,4 +63,8 @@ public class Meeting {
     private Integer meetingApplypersonnumber;
     /** 签到人数 **/
     private Integer meetingSignpersonnumber;
+    /** 发起类型（0盟友发起、1公司发起） **/
+    private Integer startType;
+    /** 用户集合 **/
+    private List<Users> usersList;
 }

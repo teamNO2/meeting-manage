@@ -20,11 +20,12 @@
         <result column="user_id" property="userId" jdbcType="INTEGER" />
         <result column="meeting_applypersonnumber" property="meetingApplypersonnumber" jdbcType="INTEGER" />
         <result column="meeting_signpersonnumber" property="meetingSignpersonnumber" jdbcType="INTEGER" />
+        <result column="start_type" property="startType" jdbcType="INTEGER" />
     </resultMap>
 
 
     <sql id="Base_Column_List" >
-        `meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`meeting_checkstatus`,`meeting_status`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`
+        `meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`meeting_checkstatus`,`meeting_status`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`,`start_type`
     </sql>
 
 
@@ -35,8 +36,8 @@
 
 
     <insert id="insert" parameterType="com.suixingpay.entity.Meeting" >
-        insert into `meeting` (`meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`meeting_checkstatus`,`meeting_status`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`)
-        values (#{meetingId,jdbcType=INTEGER},#{meetingType,jdbcType=INTEGER},#{meetingName,jdbcType=VARCHAR},#{meetingCreate,jdbcType=VARCHAR},#{meetingSalary,jdbcType=INTEGER},#{meetingDate,jdbcType=TIMESTAMP},#{meetingStarttime,jdbcType=TIMESTAMP},#{meetingTimelong,jdbcType=DOUBLE},#{meetingEndtime,jdbcType=TIMESTAMP},#{meetingAddress,jdbcType=VARCHAR},#{meetingAlladdress,jdbcType=VARCHAR},#{meetingDescribe,jdbcType=VARCHAR},#{meetingCheckstatus,jdbcType=INTEGER},#{meetingStatus,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{meetingApplypersonnumber,jdbcType=INTEGER},#{meetingSignpersonnumber,jdbcType=INTEGER})
+        insert into `meeting` (`meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`meeting_checkstatus`,`meeting_status`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`,`start_type`)
+        values (#{meetingId,jdbcType=INTEGER},#{meetingType,jdbcType=INTEGER},#{meetingName,jdbcType=VARCHAR},#{meetingCreate,jdbcType=VARCHAR},#{meetingSalary,jdbcType=INTEGER},#{meetingDate,jdbcType=TIMESTAMP},#{meetingStarttime,jdbcType=TIMESTAMP},#{meetingTimelong,jdbcType=DOUBLE},#{meetingEndtime,jdbcType=TIMESTAMP},#{meetingAddress,jdbcType=VARCHAR},#{meetingAlladdress,jdbcType=VARCHAR},#{meetingDescribe,jdbcType=VARCHAR},#{meetingCheckstatus,jdbcType=INTEGER},#{meetingStatus,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{meetingApplypersonnumber,jdbcType=INTEGER},#{meetingSignpersonnumber,jdbcType=INTEGER},#{startType,jdbcType=INTEGER})
     </insert>
 
 
@@ -94,6 +95,9 @@
             <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
                 `meeting_signpersonnumber`,
             </if>
+            <if test="startType != null or startType == 0" >
+                `start_type`,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="meetingId != null or meetingId == 0" >
@@ -146,6 +150,9 @@
             </if>
             <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
                 #{meetingSignpersonnumber,jdbcType=INTEGER},
+            </if>
+            <if test="startType != null or startType == 0" >
+                #{startType,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -202,6 +209,9 @@
             <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
                 `meeting_signpersonnumber` = #{meetingSignpersonnumber,jdbcType=INTEGER},
             </if>
+            <if test="startType != null or startType == 0" >
+                `start_type` = #{startType,jdbcType=INTEGER},
+            </if>
         </set>
         where `meeting_id` = #{meetingId,jdbcType=INTEGER}
     </update>
@@ -224,7 +234,8 @@
         `meeting_status` = #{meetingStatus,jdbcType=INTEGER},
         `user_id` = #{userId,jdbcType=INTEGER},
         `meeting_applypersonnumber` = #{meetingApplypersonnumber,jdbcType=INTEGER},
-        `meeting_signpersonnumber` = #{meetingSignpersonnumber,jdbcType=INTEGER}
+        `meeting_signpersonnumber` = #{meetingSignpersonnumber,jdbcType=INTEGER},
+        `start_type` = #{startType,jdbcType=INTEGER}
         where `meeting_id` = #{meetingId,jdbcType=INTEGER}
     </update>
 
@@ -290,6 +301,9 @@
             <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
                 and `meeting_signpersonnumber` = #{meetingSignpersonnumber,jdbcType=INTEGER}
             </if>
+            <if test="startType != null or startType == 0" >
+                and `start_type` = #{startType,jdbcType=INTEGER}
+            </if>
 
             <if test="null != likes">
                 <foreach collection="likes.keys" item="k" separator=" ">
@@ -343,6 +357,9 @@
                     </if>
                     <if test='k == "meetingSignpersonnumber" and likes[k] != null'>
                         and `meeting_signpersonnumber` like concat('%', #{likes.meetingSignpersonnumber,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "startType" and likes[k] != null'>
+                        and `start_type` like concat('%', #{likes.startType,jdbcType=INTEGER}, '%')
                     </if>
                 </foreach>
             </if>
@@ -468,6 +485,12 @@
                             #{itemValue}
                         </foreach>
                     </if>
+                    <if test='k == "startType" and includes[k] != null'>
+                        and `start_type` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
                 </foreach>
             </if>
         </where>
@@ -489,9 +512,6 @@
             </if>
             <if test="meetingSalary != null or meetingSalary == 0" >
                 and `meeting_salary` like concat('%', #{meetingSalary,jdbcType=INTEGER}, '%')
-            </if>
-            <if test="meetingDate != null" >
-                and `meeting_date` like concat('%', #{meetingDate,jdbcType=TIMESTAMP}, '%')
             </if>
             <if test="meetingStarttime != null" >
                 and `meeting_starttime` like concat('%', #{meetingStarttime,jdbcType=TIMESTAMP}, '%')
@@ -525,6 +545,9 @@
             </if>
             <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
                 and `meeting_signpersonnumber` like concat('%', #{meetingSignpersonnumber,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="startType != null or startType == 0" >
+                and `start_type` like concat('%', #{startType,jdbcType=INTEGER}, '%')
             </if>
         </where>
     </sql>
@@ -585,6 +608,9 @@
                 <if test='k == "meetingSignpersonnumber"'>
                     `meeting_signpersonnumber`
                 </if>
+                <if test='k == "startType"'>
+                    `start_type`
+                </if>
                 <if test='orders[k] == "asc"'>
                     ASC
                 </if>
@@ -630,13 +656,11 @@
         <include refid="findPageWithWhere" />
     </select>
 
-    <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap" >
+    <select id="findMeetingWithLike" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
         from  `meeting`
         <include refid="findPageWithWhereLike" />
-        <include refid="findPageWithOrder" />
-        limit #{start},#{pageSize}
     </select>
 
 
@@ -645,6 +669,17 @@
         from `meeting`
         <include refid="findPageWithWhereLike" />
     </select>
+
+    <select id="limitDate" parameterType="date" resultType="com.suixingpay.entity.Meeting">
+        select
+        <include refid="Base_Column_List"/>
+        from `meeting`
+        where
+        <if test="beginDate != null and beginDate != '' and endDate != null and endDate != ''">
+         `meeting_date` between #{beginDate} and #{endDate}
+        </if>
+    </select>
+
 
 
 </mapper>
