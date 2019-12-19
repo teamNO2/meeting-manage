@@ -144,28 +144,28 @@
     后台管理审核会议
     -->
 
-    <select id="backgroundUpdateStatus0" parameterType="java.lang.Integer">
+    <update id="backgroundUpdateStatus0" parameterType="java.lang.Integer">
         update `meeting`
         <set >
                 `meeting_checkstatus` =0
         </set>
         where meeting_id = #{meetingId}
-    </select>
+    </update>
 
-    <select id="backgroundUpdateStatus1" parameterType="java.lang.Integer">
+    <update id="backgroundUpdateStatus1" parameterType="java.lang.Integer">
         update `meeting`
         <set >
                 `meeting_checkstatus` =1
         </set>
         where meeting_id = #{meetingId}
-    </select>
+    </update>
 
-    <select id="backgroundUpdateStatus2"  parameterType="java.lang.Integer">
+    <update id="backgroundUpdateStatus2" parameterType="java.lang.Integer">
         update `meeting`
         <set >
                 `meeting_checkstatus` =2
         </set>
         where meeting_id = #{meetingId}
-    </select>
+    </update>
 
 </mapper>
