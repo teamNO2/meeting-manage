@@ -112,7 +112,7 @@
     后台管理查询会议详细
     -->
 
-    <select id="backgroundSelectById1" resultType="com.suixingpay.entity.Meeting" parameterType="java.lang.Integer">
+    <select id="backgroundSelectById1" resultMap="MeetingResultMap" parameterType="java.lang.Integer">
         select m.meeting_id,m.start_type,u.user_name,u.referral_code,m.meeting_name,m.meeting_create,
         m.meeting_salary,m.meeting_date,m.meeting_starttime,m.meeting_address,m.meeting_alladdress,
         m.meeting_endtime,m.meeting_describe,m.meeting_checkstatus,
