@@ -43,9 +43,6 @@ public class BackgroundController {
     private BackgroundService backgroundService;
 
 
-
-
-
     /**
      * @Description: 管理员创建会议
      * @Param: [map]
@@ -55,108 +52,155 @@ public class BackgroundController {
      */
     @PostMapping("/createMeeting")
     @ResponseBody
-    public Callable<GenericResponse> CreateMeeting(@RequestBody Map map)throws Exception{
+    public Callable<GenericResponse> CreateMeeting(@RequestBody Map map) throws Exception {
 
-        String name = (String)map.get("userName");
+        String name = (String) map.get("userName");
+        String userCode = (String) map.get("userCode");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        StringBuffer stringBuffer = new StringBuffer();
+        Date date = new Date();
+        Users users = null;
         //判断前端是否传递空值
-        if (name==null||"".equals(name)){
-            return()->GenericResponse.failed("666", "创建失败");
+        if (name == null || "".equals(name)) {
+            return () -> GenericResponse.failed("666", "创建失败");
         }
 
-        Users users = backgroundService.selectByName(name);
+        //判断邀请码有无
+        if (userCode != null) {
+            users = backgroundService.selectByTwo(name, userCode);
+        } else {
+            users = backgroundService.selectByName(name);
+            System.out.println("caonima");
+            if (users != null) {
+                users.setUserId("-1");
+            }
+        }
 
         //判断数据库中是否存在该鑫管家
-        if (users==null){
-            return()->GenericResponse.failed("666", "鑫管家不存在，创建失败");
+        if (users == null) {
+            return () -> GenericResponse.failed("666", "鑫管家不存在，创建失败");
         }
 
-        String userId  = users.getUserId();
+        String userId = users.getUserId();
         System.out.println(userId);
-        int meetingId = (int)map.get("meetingId");
+
+
+        int meetingType = (int) map.get("meetingType");
         //判空
-        if (meetingId==0){
-            return()->GenericResponse.failed("666", "meetingId，为空创建失败");
-        }
-        Meeting meeting1 = backgroundService.selectById(String.valueOf(meetingId));
-        if(meeting1!=null){
-            return()->GenericResponse.failed("666", "会议已存在");
+        if (meetingType == -1) {
+            return () -> GenericResponse.failed("666", "meetingType，为空创建失败");
         }
 
-        int meetingType = (int)map.get("meetingType");
+        String meetingName = (String) map.get("meetingName");
         //判空
-        if (meetingType==-1){
-            return()->GenericResponse.failed("666", "meetingType，为空创建失败");
+        if (meetingName == null || "".equals(meetingName)) {
+            return () -> GenericResponse.failed("666", "meetingName，为空创建失败");
         }
 
-        String meetingName = (String)map.get("meetingName");
+        String meetingCreate = (String) map.get("meetingCreate");
         //判空
-        if (meetingName==null||"".equals(meetingName)){
-            return()->GenericResponse.failed("666", "meetingName，为空创建失败");
+        if (meetingCreate == null || "".equals(meetingCreate)) {
+            return () -> GenericResponse.failed("666", "meetingCreate，为空创建失败");
         }
 
-        String meetingCreate = (String)map.get("meetingCreate");
+        int meetingSalary = (int) map.get("meetingSalary");
         //判空
-        if (meetingCreate==null||"".equals(meetingCreate)){
-            return()->GenericResponse.failed("666", "meetingCreate，为空创建失败");
-        }
-
-        int meetingSalary = (int)map.get("meetingSalary");
-        //判空
-        if (meetingSalary==0){
-            return()->GenericResponse.failed("666", "meetingSalary，为空创建失败");
+        if (meetingSalary == -1) {
+            return () -> GenericResponse.failed("666", "meetingSalary，为空创建失败");
         }
 
         String meetingDate = (String) map.get("meetingDate");
         //判空
-        if (meetingDate==null||"".equals(meetingDate)){
-            return()->GenericResponse.failed("666", "meetingDate，为空创建失败");
+        if (meetingDate == null || "".equals(meetingDate)) {
+            return () -> GenericResponse.failed("666", "meetingDate，为空创建失败");
+        }
+        Date DmeetingDate = format1.parse(meetingDate);
+        String Sdate = format1.format(date);
+        //获取当前日期
+        Date Ddate = format1.parse(Sdate);
+        //判定会议日期是否小于当前日期
+        if (DmeetingDate.before(Ddate)) {
+            return () -> GenericResponse.failed("666", "会议日期不合法");
         }
 
-        String meetingStarttime = (String)map.get("meetingStarttime");
+
+        String meetingStarttime = (String) map.get("meetingStarttime");
         //判空
-        if (meetingStarttime==null||"".equals(meetingStarttime)){
-            return()->GenericResponse.failed("666", "meetingStarttime，为空创建失败");
+        if (meetingStarttime == null || "".equals(meetingStarttime)) {
+            return () -> GenericResponse.failed("666", "meetingStarttime，为空创建失败");
+        }
+        Date DmeetingStarttime = format.parse(meetingStarttime);
+        Date DmeetingStarttimeSmall = format1.parse(meetingStarttime);
+        if (DmeetingStarttimeSmall.before(DmeetingDate) || DmeetingStarttimeSmall.after(DmeetingDate)) {
+            return () -> GenericResponse.failed("666", "开始时间和日期不在同一天");
+        }
+        Date date1 = new Date();
+        String Sdate1 = format1.format(date1);
+        Date Ddate1 = format1.parse(Sdate1);
+        if (DmeetingStarttime.before(Ddate1)) {
+            return () -> GenericResponse.failed("666", "开始时间不合法");
         }
 
-        String meetingAddress = (String)map.get("meetingAddress");
+        ArrayList<String> meetingAddress1 = (ArrayList<String>) map.get("meetingAddress");
+        String a1 = meetingAddress1.get(0);
+        String a2 = meetingAddress1.get(1);
+        String a3 = meetingAddress1.get(2);
+        String meetingAddress = stringBuffer.append(a1).append(",").append(a2).append(",").append(a3).toString();
         //判空
-        if (meetingAddress==null||"".equals(meetingAddress)){
-            return()->GenericResponse.failed("666", "meetingAddress，为空创建失败");
+        if (meetingAddress == null || "".equals(meetingAddress)) {
+            return () -> GenericResponse.failed("666", "meetingAddress，为空创建失败");
         }
 
-        String meetingEndtime = (String)map.get("meetingEndtime");
+        String meetingEndtime = (String) map.get("meetingEndtime");
         //判空
-        if (meetingEndtime==null||"".equals(meetingEndtime)){
-            return()->GenericResponse.failed("666", "meetingEndtime，为空创建失败");
+        if (meetingEndtime == null || "".equals(meetingEndtime)) {
+            return () -> GenericResponse.failed("666", "meetingEndtime，为空创建失败");
+        }
+        Date date2 = new Date();
+        String Sdate2 = format1.format(date2);
+        Date Ddate2 = format1.parse(Sdate2);
+        Date DmeetingEndtime = format.parse(meetingEndtime);
+
+        if (DmeetingEndtime.before(Ddate2)) {
+            return () -> GenericResponse.failed("666", "结束时间不合法");
         }
 
-        String meetingDescribe = (String)map.get("meetingDescribe");
-        //判空
-        if (meetingDescribe==null||"".equals(meetingDescribe)){
-            return()->GenericResponse.failed("666", "meetingDescribe，为空创建失败");
+        if (DmeetingEndtime.after(DmeetingStarttime)) {
+            return () -> GenericResponse.failed("666", "报名结束时间晚于活动开始时间");
         }
+
+        String meetingDescribe = (String) map.get("meetingDescribe");
+        //判空
+        if (meetingDescribe == null || "".equals(meetingDescribe)) {
+            return () -> GenericResponse.failed("666", "meetingDescribe，为空创建失败");
+        }
+        String meetingAlladdress = (String) map.get("meetingAlladdress");
+        //判空
+        if (meetingAlladdress == null || "".equals(meetingAlladdress)) {
+            return () -> GenericResponse.failed("666", "meetingAlladdress，为空创建失败");
+        }
+        int startType = (int) map.get("startType");
         Meeting meeting = new Meeting();
+        meeting.setMeetingType(meetingType);
         meeting.setMeetingAddress(meetingAddress);
-        Date DmeetingDate = format.parse(meetingDate);
         meeting.setMeetingDate(DmeetingDate);
         meeting.setMeetingName(meetingName);
         meeting.setMeetingDescribe(meetingDescribe);
-        Date DmeetingEndtime = format.parse(meetingEndtime);
         meeting.setMeetingEndtime(DmeetingEndtime);
-        meeting.setMeetingId(meetingId);
         meeting.setMeetingSalary(meetingSalary);
         meeting.setUserId(Integer.parseInt(userId));
-        Date DmeetingStarttime = format.parse(meetingStarttime);
         meeting.setMeetingStarttime(DmeetingStarttime);
         meeting.setMeetingAddress(meetingAddress);
         meeting.setMeetingCreate(meetingCreate);
+        meeting.setMeetingAlladdress(meetingAlladdress);
+        meeting.setStartType(startType);
         int index = backgroundService.createMeeting(meeting);
         //判断是否插入成功
-        if (index ==0){
-            return()->GenericResponse.failed("666","插入失败");
-        }else {
-            return()->GenericResponse.success("666","插入成功");
+        if (index == 0) {
+            return () -> GenericResponse.failed("666", "插入失败");
+        } else {
+            return () -> GenericResponse.success("666", "插入成功");
         }
 
     }
@@ -167,7 +211,7 @@ public class BackgroundController {
      * 后台管理查询所有会议
      */
     @GetMapping("/backgroundSelectAll")
-    public Callable<GenericResponse> backgroundSelectAll(){
+    public Callable<GenericResponse> backgroundSelectAll() {
         List<Meeting> meetingList = backgroundService.backgroundSelectAll();
         if (meetingList != null) {
             return () -> GenericResponse.success("666", "backgroundSelectAll查询成功", meetingList);
@@ -181,7 +225,7 @@ public class BackgroundController {
      * 后台管理查询会议详细
      */
     @GetMapping("/backgroundSelectById/{meetingId}")
-    public Callable<GenericResponse> backgroundSelectById1(@PathVariable("meetingId") String meetingId){
+    public Callable<GenericResponse> backgroundSelectById1(@PathVariable("meetingId") String meetingId) {
         List<Meeting> meetingList = backgroundService.backgroundSelectById1(Integer.valueOf(meetingId));
         List<Apply> applyList = backgroundService.backgroundSelectById2(Integer.valueOf(meetingId));
         List<Sign> signList = backgroundService.backgroundSelectById3(Integer.valueOf(meetingId));
@@ -201,9 +245,9 @@ public class BackgroundController {
      * 后台管理审核会议
      */
     @GetMapping("/backgroundUpdateStatus/{meetingId}/{check}")
-    public Callable<GenericResponse> backgroundUpdateStatus(@PathVariable("meetingId") String meetingId, @PathVariable("check") String check){
+    public Callable<GenericResponse> backgroundUpdateStatus(@PathVariable("meetingId") String meetingId, @PathVariable("check") String check) {
         System.out.println(check);
-        Integer num = backgroundService.backgroundUpdateStatus(Integer.valueOf(meetingId),Integer.valueOf(check));
+        Integer num = backgroundService.backgroundUpdateStatus(Integer.valueOf(meetingId), Integer.valueOf(check));
         if (num != null) {
             return () -> GenericResponse.success("666", "backgroundUpdateStatus修改成功", num);
         } else {
@@ -220,19 +264,21 @@ public class BackgroundController {
      */
     @PostMapping("/selectMeetingWithLike")
     @ResponseBody
-    public List<Meeting> selectMeetingWithLike(@RequestBody Map map)throws Exception{
+    public List<Meeting> selectMeetingWithLike(@RequestBody Map map) throws Exception {
+        List<Users> usersList = null;
         Users users = new Users();
-        String referralCode =(String) map.get("referralCode");
+        String referralCode = (String) map.get("referralCode");
         users.setReferralCode(referralCode);
-        List<Users>usersList = backgroundService.findPageWithResultLike(users);
+        usersList = backgroundService.findPageWithResultLike(users);
 
         Meeting meeting = new Meeting();
-        List<Meeting> meetingList = new ArrayList<>();
+        List<Meeting> meetingList = null;
         List<Meeting> meetingList1 = null;
-        List<Meeting> meetingList2 = new ArrayList<>();
-        List<Meeting> meetingListAll = new ArrayList<>();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Meeting> meetingList2 = null;
+        List<Meeting> meetingListAll = null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String beginDate = (String)map.get("startDate");
+        System.out.println(beginDate);
         String endDate = (String)map.get("endDate");
         //当日期范围存在时
         if (beginDate!=null&&endDate!=null) {
@@ -240,10 +286,15 @@ public class BackgroundController {
             Date date1 = format.parse(beginDate);
             Date date2 = format.parse(endDate);
             meetingList1 = backgroundService.limitDate(date1, date2);
+            System.out.println("caonima");
+            System.out.println(meetingList1.size());
         }
 
         String meetingSalary = (String)map.get("meetingSalary");
-        meeting.setMeetingSalary(Integer.valueOf(meetingSalary));
+        //判空
+        if (meetingSalary!=null) {
+            meeting.setMeetingSalary(Integer.valueOf(meetingSalary));
+        }
         String meetingType = (String) map.get("meetingType");
         //判空
         if (meetingType!=null) {
@@ -266,8 +317,7 @@ public class BackgroundController {
         }
         meetingList2 = backgroundService.findPageWithResultLike(meeting);
 
-        if (meetingList1!=null){
-            System.out.println("caonima");
+        meetingList = new ArrayList<>();
             for (Meeting meeting1:meetingList1){
                 for (Meeting meeting2:meetingList2){
                     if(meeting1.getMeetingId() == meeting2.getMeetingId()){
@@ -277,11 +327,7 @@ public class BackgroundController {
                 }
             }
             meetingListAll = backgroundService.likeMeeting(meetingList, usersList);
-        }else {
-            meetingListAll= backgroundService.likeMeeting(meetingList2, usersList);
-
-        }
         return meetingListAll;
-    }
+     }
 
 }

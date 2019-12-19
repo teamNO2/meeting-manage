@@ -25,11 +25,14 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UsersRepository {
-    //根据name查询
-    Users selectByName( String userName);
+    //根据查询
+    Users selectByName(String userName);
     //模糊查询
     List<Users> findPageWithResultLike(Users users);
     //根据id查询
     Users selectById(String id);
 
+    Users selectByTwo(@Param("userName") String userName,@Param("referralCode") String referralCode);
+
+    List<Users> selectAll();
 }

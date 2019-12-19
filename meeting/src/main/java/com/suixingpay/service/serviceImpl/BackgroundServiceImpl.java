@@ -49,10 +49,17 @@ public class BackgroundServiceImpl implements BackgroundService {
         return meetingRepository.insertSelective(meeting);
     }
     //根据name查询
+
     @Override
     public Users selectByName(String userName) {
         return usersRepository.selectByName(userName);
     }
+
+    @Override
+    public Users selectByTwo(String userName, String referralCode) {
+        return usersRepository.selectByTwo(userName,referralCode);
+    }
+
     //根据ID查询
     @Override
     public Meeting selectById(String meetingId) {
@@ -61,29 +68,46 @@ public class BackgroundServiceImpl implements BackgroundService {
     //模糊查询会议
     @Override
     public List<Meeting> likeMeeting(List<Meeting> meetings, List<Users> users) {
-        List<Meeting> meetingList = new ArrayList<>();
-
-        for (Meeting meetings1:meetings){
-            for (Users users1:users){
-                System.out.println(meetings1.getUserId());
-                if(users1.getId()==meetings1.getUserId()){
-                    System.out.println(users1.getId());
-                    List<Users>usersList = new ArrayList<>();
-                    usersList.add(users1);
+        if (meetings==null||meetings.isEmpty()||users==null||users.isEmpty()){
+            return new ArrayList<>();
+        }else {
+            List<Meeting> meetingList = new ArrayList<>();
+            for (Meeting meetings1 : meetings) {
+                if (meetings1.getUserId() == -1) {
+                    List<Users> usersList = new ArrayList<>();
+                    for (Users users1 : users) {
+                        usersList.add(users1);
+                    }
                     meetings1.setUsersList(usersList);
                     meetingList.add(meetings1);
-                    break;
+                } else {
+                    for (Users users1 : users) {
+                        System.out.println(meetings1.getUserId());
+                        if (users1.getId() == meetings1.getUserId()) {
+                            System.out.println(users1.getId());
+                            List<Users> usersList = new ArrayList<>();
+                            usersList.add(users1);
+                            meetings1.setUsersList(usersList);
+                            meetingList.add(meetings1);
+                            break;
+                        }
+                    }
                 }
             }
+            return meetingList;
         }
-
-        return meetingList;
     }
     //模糊查询鑫管家
     @Override
     public List<Users> findPageWithResultLike(Users users) {
         return usersRepository.findPageWithResultLike(users);
     }
+
+    @Override
+    public List<Users> selectAll() {
+        return usersRepository.selectAll();
+    }
+
     //模糊查询
     @Override
     public List<Meeting> findPageWithResultLike(Meeting meeting) {

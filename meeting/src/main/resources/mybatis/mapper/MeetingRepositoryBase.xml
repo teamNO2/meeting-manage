@@ -40,7 +40,7 @@
         values (#{meetingId,jdbcType=INTEGER},#{meetingType,jdbcType=INTEGER},#{meetingName,jdbcType=VARCHAR},#{meetingCreate,jdbcType=VARCHAR},#{meetingSalary,jdbcType=INTEGER},#{meetingDate,jdbcType=TIMESTAMP},#{meetingStarttime,jdbcType=TIMESTAMP},#{meetingTimelong,jdbcType=DOUBLE},#{meetingEndtime,jdbcType=TIMESTAMP},#{meetingAddress,jdbcType=VARCHAR},#{meetingAlladdress,jdbcType=VARCHAR},#{meetingDescribe,jdbcType=VARCHAR},#{meetingCheckstatus,jdbcType=INTEGER},#{meetingStatus,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{meetingApplypersonnumber,jdbcType=INTEGER},#{meetingSignpersonnumber,jdbcType=INTEGER},#{startType,jdbcType=INTEGER})
     </insert>
 
-
+    <!--李常昊改-->
     <insert id="insertSelective" parameterType="com.suixingpay.entity.Meeting" >
         insert into `meeting`
         <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -674,10 +674,7 @@
         select
         <include refid="Base_Column_List"/>
         from `meeting`
-        where
-        <if test="beginDate != null and beginDate != '' and endDate != null and endDate != ''">
-         `meeting_date` between #{beginDate} and #{endDate}
-        </if>
+        where  `meeting_date` between #{beginDate} and #{endDate}
     </select>
 
 
