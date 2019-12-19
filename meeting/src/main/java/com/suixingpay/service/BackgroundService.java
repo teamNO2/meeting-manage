@@ -33,7 +33,7 @@ public interface BackgroundService {
      * 张佳鑫
      * 后台管理查询会议详细
      */
-    List<Meeting> backgroundSelectById1(Integer meetingId);
+    Meeting backgroundSelectById1(Integer meetingId);
 
     List<Apply> backgroundSelectById2(Integer meetingId);
 

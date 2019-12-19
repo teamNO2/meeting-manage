@@ -677,6 +677,12 @@
         where  `meeting_date` between #{beginDate} and #{endDate}
     </select>
 
-
+<!--    // 石梦瑶 查询这个鑫管家已经报名的活动-->
+    <select id="selectisapply" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        m.*
+        from  `meeting` as m left join sign as s on m.meeting_id=s.meeting_id
+        where s.sign_isapply=1 and s.user_id=#{userId}
+    </select>
 
 </mapper>
