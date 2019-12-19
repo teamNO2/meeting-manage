@@ -35,9 +35,10 @@
     </delete>
 
 
+    <!-- 普通新建 孙克强 -->
     <insert id="insert" parameterType="com.suixingpay.entity.Meeting" >
-        insert into `meeting` (`meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`meeting_checkstatus`,`meeting_status`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`,`start_type`)
-        values (#{meetingId,jdbcType=INTEGER},#{meetingType,jdbcType=INTEGER},#{meetingName,jdbcType=VARCHAR},#{meetingCreate,jdbcType=VARCHAR},#{meetingSalary,jdbcType=INTEGER},#{meetingDate,jdbcType=TIMESTAMP},#{meetingStarttime,jdbcType=TIMESTAMP},#{meetingTimelong,jdbcType=DOUBLE},#{meetingEndtime,jdbcType=TIMESTAMP},#{meetingAddress,jdbcType=VARCHAR},#{meetingAlladdress,jdbcType=VARCHAR},#{meetingDescribe,jdbcType=VARCHAR},#{meetingCheckstatus,jdbcType=INTEGER},#{meetingStatus,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{meetingApplypersonnumber,jdbcType=INTEGER},#{meetingSignpersonnumber,jdbcType=INTEGER},#{startType,jdbcType=INTEGER})
+        insert into `meeting` (`meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`,`start_type`)
+        values (#{meetingId,jdbcType=INTEGER},#{meetingType,jdbcType=INTEGER},#{meetingName,jdbcType=VARCHAR},#{meetingCreate,jdbcType=VARCHAR},#{meetingSalary,jdbcType=INTEGER},#{meetingDate,jdbcType=TIMESTAMP},#{meetingStarttime,jdbcType=TIMESTAMP},#{meetingTimelong,jdbcType=DOUBLE},#{meetingEndtime,jdbcType=TIMESTAMP},#{meetingAddress,jdbcType=VARCHAR},#{meetingAlladdress,jdbcType=VARCHAR},#{meetingDescribe,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{meetingApplypersonnumber,jdbcType=INTEGER},#{meetingSignpersonnumber,jdbcType=INTEGER},#{startType,jdbcType=INTEGER})
     </insert>
 
 

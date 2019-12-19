@@ -36,4 +36,7 @@ public interface MeetingRepository {
     List<Meeting> findMeetingWithLike(Meeting meeting);
     //根据日期查询
     List<Meeting> limitDate(Date beginDate,Date endDate);
+
+    //根据会议id修改会议
+    int updateByPrimaryKey(Meeting meeting);
 }
