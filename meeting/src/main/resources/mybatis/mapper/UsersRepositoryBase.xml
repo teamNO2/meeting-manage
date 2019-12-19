@@ -26,6 +26,10 @@
         `id`,`user_id`,`user_name`,`telephone`,`root_user_id`,`p_user_id`,`referral_code`,`level_no`,`user_province`,`user_city`,`create_date`,`update_date`,`status`,`USER`,`CURRENT_CONNECTIONS`,`TOTAL_CONNECTIONS`
     </sql>
 
+    <sql id="Base_Column_List1" >
+        `id`,`user_id`,`user_name`,`telephone`,`root_user_id`,`p_user_id`,`referral_code`,`level_no`,`user_province`,`user_city`,`create_date`,`update_date`,`status`
+    </sql>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from `users`
@@ -224,6 +228,8 @@
         from  `users`
         where `id` = #{id,jdbcType=INTEGER}
     </select>
+
+
 
 
     <sql id="findPageWithWhere" >
@@ -487,15 +493,6 @@
             <if test="status != null" >
                 and `status` like concat('%', #{status,jdbcType=CHAR}, '%')
             </if>
-            <if test="USER != null" >
-                and `USER` like concat('%', #{USER,jdbcType=CHAR}, '%')
-            </if>
-            <if test="CURRENTCONNECTIONS != null" >
-                and `CURRENT_CONNECTIONS` like concat('%', #{CURRENTCONNECTIONS,jdbcType=BIGINT}, '%')
-            </if>
-            <if test="TOTALCONNECTIONS != null" >
-                and `TOTAL_CONNECTIONS` like concat('%', #{TOTALCONNECTIONS,jdbcType=BIGINT}, '%')
-            </if>
         </where>
     </sql>
 
@@ -599,11 +596,9 @@
 
     <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Users" resultMap="BaseResultMap" >
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List1" />
         from  `users`
         <include refid="findPageWithWhereLike" />
-        <include refid="findPageWithOrder" />
-        limit #{start},#{pageSize}
     </select>
 
 
@@ -612,6 +607,18 @@
         from `users`
         <include refid="findPageWithWhereLike" />
     </select>
+
+    <!--根据name查询user-->
+    <!--李常昊-->
+    <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        `user_id`
+        from  `users`
+        where `user_name` = #{userName}
+    </select>
+
+
+
 
 
 </mapper>

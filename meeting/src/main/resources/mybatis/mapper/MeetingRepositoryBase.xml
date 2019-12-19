@@ -513,9 +513,6 @@
             <if test="meetingSalary != null or meetingSalary == 0" >
                 and `meeting_salary` like concat('%', #{meetingSalary,jdbcType=INTEGER}, '%')
             </if>
-            <if test="meetingDate != null" >
-                and `meeting_date` like concat('%', #{meetingDate,jdbcType=TIMESTAMP}, '%')
-            </if>
             <if test="meetingStarttime != null" >
                 and `meeting_starttime` like concat('%', #{meetingStarttime,jdbcType=TIMESTAMP}, '%')
             </if>
@@ -659,13 +656,11 @@
         <include refid="findPageWithWhere" />
     </select>
 
-    <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap" >
+    <select id="findMeetingWithLike" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
         from  `meeting`
         <include refid="findPageWithWhereLike" />
-        <include refid="findPageWithOrder" />
-        limit #{start},#{pageSize}
     </select>
 
 
@@ -675,5 +670,22 @@
         <include refid="findPageWithWhereLike" />
     </select>
 
+    <select id="limitDate" parameterType="date" resultType="com.suixingpay.entity.Meeting">
+        select
+        <include refid="Base_Column_List"/>
+        from `meeting`
+        where
+        <if test="beginDate != null and beginDate != '' and endDate != null and endDate != ''">
+         `meeting_date` between #{beginDate} and #{endDate}
+        </if>
+    </select>
+
+<!--    // 石梦瑶 查询这个鑫管家已经报名的活动-->
+    <select id="selectisapply" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        m.*
+        from  `meeting` as m left join sign as s on m.meeting_id=s.meeting_id
+        where s.sign_isapply=1 and s.user_id=#{userId}
+    </select>
 
 </mapper>

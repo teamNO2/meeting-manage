@@ -12,6 +12,9 @@ import com.suixingpay.entity.Meeting;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @description:
  * @author: 孙克强<sun_kq@suixingpay.com>
@@ -21,10 +24,21 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface MeetingRepository {
-
     //按meeting-id查询
     public Meeting selectById(String meetingId);
 
     //新建鑫管家发起的会议
     public int insert(Meeting meeting);
+
+    //插入会议
+    int insertSelective(Meeting meeting);
+    //模糊查询
+    List<Meeting> findMeetingWithLike(Meeting meeting);
+    //根据日期查询
+    List<Meeting> limitDate(Date beginDate,Date endDate);
+
+    //查询已经报名的 石梦瑶 0 1
+    List<Meeting> selectisapply(String userId);
+
+
 }
