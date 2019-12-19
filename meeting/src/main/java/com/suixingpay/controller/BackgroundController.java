@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Max;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 /*
@@ -48,15 +47,15 @@ public class BackgroundController {
      */
     @GetMapping("/backgroundSelectById/{meetingId}")
     public Callable<GenericResponse> backgroundSelectById1(@PathVariable("meetingId") String meetingId){
-        List<Meeting> meetingList = backgroundService.backgroundSelectById1(Integer.valueOf(meetingId));
+        Map<String, Object> map = new HashMap<>();
+        Meeting meeting = backgroundService.backgroundSelectById1(Integer.valueOf(meetingId));
         List<Apply> applyList = backgroundService.backgroundSelectById2(Integer.valueOf(meetingId));
         List<Sign> signList = backgroundService.backgroundSelectById3(Integer.valueOf(meetingId));
-        List<Object> list = new ArrayList<>();
-        list.addAll(meetingList);
-        list.addAll(applyList);
-        list.addAll(signList);
-        if (list != null) {
-            return () -> GenericResponse.success("666", "backgroundSelectById查询成功", list);
+        map.put("a", meeting);
+        map.put("m", signList);
+        map.put("s", applyList);
+        if (map != null) {
+            return () -> GenericResponse.success("666", "backgroundSelectById查询成功", map);
         } else {
             return () -> GenericResponse.failed("666", "backgroundSelectById查询失败");
         }
@@ -68,9 +67,8 @@ public class BackgroundController {
      */
     @GetMapping("/backgroundUpdateStatus/{meetingId}/{check}")
     public Callable<GenericResponse> backgroundUpdateStatus(@PathVariable("meetingId") String meetingId, @PathVariable("check") String check){
-        System.out.println(check);
         Integer num = backgroundService.backgroundUpdateStatus(Integer.valueOf(meetingId),Integer.valueOf(check));
-        if (num != null) {
+        if (num!=null) {
             return () -> GenericResponse.success("666", "backgroundUpdateStatus修改成功", num);
         } else {
             return () -> GenericResponse.failed("666", "backgroundUpdateStatus修改失败");
