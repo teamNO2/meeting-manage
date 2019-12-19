@@ -1,0 +1,27 @@
+package com.suixingpay.service.serviceImpl;
+
+import com.suixingpay.entity.Meeting;
+import com.suixingpay.repository.MeetingRepository;
+import com.suixingpay.service.MeetingHomeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @ClassName MeetingHomeServiceImpl
+ * @Description TODO
+ * @Author ShiMengyao
+ * @Date 2019 年 12 月 19 日 0019 11:19:45
+ * @Version 1.0
+ */
+@Service
+public class MeetingHomeServiceImpl implements MeetingHomeService {
+    @Autowired
+    MeetingRepository meetingRepository;
+
+    @Override
+    public List<Meeting> selectisapply(String userId) {
+        return meetingRepository.selectisapply(userId);
+    }
+}

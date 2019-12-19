@@ -36,4 +36,9 @@ public interface MeetingRepository {
     List<Meeting> findMeetingWithLike(Meeting meeting);
     //根据日期查询
     List<Meeting> limitDate(Date beginDate,Date endDate);
+
+    //查询已经报名的 石梦瑶 0 1
+    List<Meeting> selectisapply(String userId);
+
+
 }
