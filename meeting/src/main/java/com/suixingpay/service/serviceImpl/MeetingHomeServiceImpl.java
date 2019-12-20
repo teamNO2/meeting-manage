@@ -24,4 +24,9 @@ public class MeetingHomeServiceImpl implements MeetingHomeService {
     public List<Meeting> selectisapply(String userId) {
         return meetingRepository.selectisapply(userId);
     }
+
+    @Override
+    public int updatemeetingStatus(int meetingId) {
+        return meetingRepository.updatemeetingStatus(meetingId);
+    }
 }

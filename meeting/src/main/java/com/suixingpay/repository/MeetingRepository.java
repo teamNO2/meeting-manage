@@ -43,4 +43,6 @@ public interface MeetingRepository {
 
 
     List<Meeting> limitDate(@Param("beginDate") Date beginDate,@Param("endDate") Date endDate);
+
+    int updatemeetingStatus(int meetingId);
 }

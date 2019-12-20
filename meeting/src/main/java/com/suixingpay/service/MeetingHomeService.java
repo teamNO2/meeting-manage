@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface MeetingHomeService {
     List<Meeting> selectisapply(String userId);
+    //改变会议状态
+    int updatemeetingStatus(int meetingId);
 }

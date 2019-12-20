@@ -4,6 +4,7 @@ import com.suixingpay.entity.Apply;
 import com.suixingpay.entity.Meeting;
 import com.suixingpay.entity.Users;
 import com.suixingpay.service.BackgroundService;
+import com.suixingpay.service.MeetingHomeService;
 import com.suixingpay.utils.GenericResponse;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ import java.util.concurrent.Callable;
 public class BackgroundController {
     @Autowired
     private BackgroundService backgroundService;
+    @Autowired
+    private MeetingHomeService meetingHomeService;
 
 
     /**
@@ -275,6 +278,7 @@ public class BackgroundController {
         List<Meeting> meetingList2 = null;
         List<Meeting> meetingListAll = null;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String beginDate = (String)map.get("startDate");
         System.out.println(beginDate);
         String endDate = (String)map.get("endDate");
@@ -325,6 +329,18 @@ public class BackgroundController {
                 }
             }
             meetingListAll = backgroundService.likeMeeting(meetingList, usersList);
+
+            if(meetingListAll!=null&&!meetingListAll.isEmpty()){
+                for (Meeting meeting1:meetingListAll){
+                    Date date = new Date();
+                    String Sdate = format1.format(date);
+                    Date Ddate = format1.parse(Sdate);
+                    if (Ddate.after(meeting1.getMeetingEndtime())){
+                        meeting1.setMeetingStatus(2);
+                    }
+                }
+            }
+
         return meetingListAll;
      }
 
