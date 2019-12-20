@@ -15,9 +15,11 @@ import java.util.Map;
 public interface BackgroundService {
     int createMeeting(Meeting meeting);
     Users selectByName(String userName);
+    Users selectByTwo(String userName,String referralCode);
     Meeting selectById(String meetingId);
     List<Meeting> likeMeeting(List<Meeting>meetings,List<Users>users);
     List<Users> findPageWithResultLike(Users users);
+    List<Users> selectAll();
     List<Meeting> findPageWithResultLike(Meeting meeting);
     List<Meeting> limitDate(Date beginDate,Date endDate);
 
@@ -31,7 +33,7 @@ public interface BackgroundService {
      * 张佳鑫
      * 后台管理查询会议详细
      */
-    List<Meeting> backgroundSelectById1(Integer meetingId);
+    Meeting backgroundSelectById1(Integer meetingId);
 
     List<Apply> backgroundSelectById2(Integer meetingId);
 

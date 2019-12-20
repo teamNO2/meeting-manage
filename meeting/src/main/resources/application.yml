@@ -4,7 +4,7 @@ spring:
     username: root
     password: 123
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://www.wzdnn.com:3306/meeting-manage?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://www.wzdnnn.com:3306/meeting-manage?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
 
 mybatis:
@@ -12,7 +12,6 @@ mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   #指定sql映射文件的位置
   mapper-locations: classpath:mybatis/mapper/*.xml
-
 
 server:
   port: 8080

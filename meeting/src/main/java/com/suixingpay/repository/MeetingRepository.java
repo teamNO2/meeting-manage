@@ -10,6 +10,7 @@ package com.suixingpay.repository;
 
 import com.suixingpay.entity.Meeting;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -35,7 +36,16 @@ public interface MeetingRepository {
     //模糊查询
     List<Meeting> findMeetingWithLike(Meeting meeting);
     //根据日期查询
-    List<Meeting> limitDate(Date beginDate,Date endDate);
+
+
+    //查询已经报名的 石梦瑶 0 1
+    List<Meeting> selectisapply(String userId);
+
+
+    List<Meeting> limitDate(@Param("beginDate") Date beginDate,@Param("endDate") Date endDate);
+
+    //根据会议id修改会议
+    int updateByPrimaryKey(Meeting meeting);
 
     /**
      * 柴宇航

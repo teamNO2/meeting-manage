@@ -18,4 +18,9 @@ public class HousekeeperServiceImpl implements HousekeeperService {
     public int insert(Meeting meeting) {
         return meetingRepository.insert(meeting);
     }
+
+    @Override
+    public int updateByPrimaryKey(Meeting meeting) {
+        return meetingRepository.updateByPrimaryKey(meeting);
+    }
 }
