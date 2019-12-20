@@ -35,12 +35,13 @@
     </delete>
 
 
+    <!-- 普通新建 孙克强 -->
     <insert id="insert" parameterType="com.suixingpay.entity.Meeting" >
-        insert into `meeting` (`meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`meeting_checkstatus`,`meeting_status`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`,`start_type`)
-        values (#{meetingId,jdbcType=INTEGER},#{meetingType,jdbcType=INTEGER},#{meetingName,jdbcType=VARCHAR},#{meetingCreate,jdbcType=VARCHAR},#{meetingSalary,jdbcType=INTEGER},#{meetingDate,jdbcType=TIMESTAMP},#{meetingStarttime,jdbcType=TIMESTAMP},#{meetingTimelong,jdbcType=DOUBLE},#{meetingEndtime,jdbcType=TIMESTAMP},#{meetingAddress,jdbcType=VARCHAR},#{meetingAlladdress,jdbcType=VARCHAR},#{meetingDescribe,jdbcType=VARCHAR},#{meetingCheckstatus,jdbcType=INTEGER},#{meetingStatus,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{meetingApplypersonnumber,jdbcType=INTEGER},#{meetingSignpersonnumber,jdbcType=INTEGER},#{startType,jdbcType=INTEGER})
+        insert into `meeting` (`meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`,`start_type`)
+        values (#{meetingId,jdbcType=INTEGER},#{meetingType,jdbcType=INTEGER},#{meetingName,jdbcType=VARCHAR},#{meetingCreate,jdbcType=VARCHAR},#{meetingSalary,jdbcType=INTEGER},#{meetingDate,jdbcType=TIMESTAMP},#{meetingStarttime,jdbcType=TIMESTAMP},#{meetingTimelong,jdbcType=DOUBLE},#{meetingEndtime,jdbcType=TIMESTAMP},#{meetingAddress,jdbcType=VARCHAR},#{meetingAlladdress,jdbcType=VARCHAR},#{meetingDescribe,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{meetingApplypersonnumber,jdbcType=INTEGER},#{meetingSignpersonnumber,jdbcType=INTEGER},#{startType,jdbcType=INTEGER})
     </insert>
 
-
+    <!--李常昊改-->
     <insert id="insertSelective" parameterType="com.suixingpay.entity.Meeting" >
         insert into `meeting`
         <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -674,10 +675,7 @@
         select
         <include refid="Base_Column_List"/>
         from `meeting`
-        where
-        <if test="beginDate != null and beginDate != '' and endDate != null and endDate != ''">
-         `meeting_date` between #{beginDate} and #{endDate}
-        </if>
+        where  `meeting_date` between #{beginDate} and #{endDate}
     </select>
 
 <!--    // 石梦瑶 查询这个鑫管家已经报名的活动-->
@@ -686,6 +684,40 @@
         m.*
         from  `meeting` as m left join sign as s on m.meeting_id=s.meeting_id
         where s.sign_isapply=1 and s.user_id=#{userId}
+    </select>
+    <!--
+      柴宇航
+    -->
+    <select id="selectstartTimeandtimeLong" parameterType="com.suixingpay.entity.Meeting" resultType="com.suixingpay.entity.Meeting">
+        select meeting_starttime,meeting_timelong from meeting where meeting_id=#{meetingId}
+    </select>
+    <!--
+          柴宇航
+     -->
+    <select id="selectuserId" parameterType="com.suixingpay.entity.Meeting" resultType="com.suixingpay.entity.Meeting">
+        select user_id from meeting where meeting_id=#{meetingId}
+    </select>
+
+    <!-- 查看会议报名人数 孙克强-->
+    <select id="selectApplyNumberByMeetingId" parameterType="int" resultType="int">
+        select meeting.meeting_applypersonnumber from `meeting` where `meeting_id` = #{meetingId}
+    </select>
+
+    <!-- applyUsersMeetingMap -->
+    <resultMap id="applyUsersMeetingMap" type="com.suixingpay.entity.Apply">
+        <id column="apply_id" property="applyId" jdbcType="INTEGER"></id>
+        <result column="apply_time" property="applyTime" javaType="java.util.Date"></result>
+        <collection property="usersList" ofType="com.suixingpay.entity.Users">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+    <!-- 查看会议报名信息 -->
+    <select id="selectApplyByMeetingId" parameterType="int" resultMap="applyUsersMeetingMap">
+        SELECT u.user_name,u.telephone,a.apply_time
+        FROM apply a JOIN users u  ON a.user_id = u.id JOIN meeting m ON a.meeting_id = m.meeting_id
+        WHERE a.meeting_id = 1
     </select>
 
     <!--  石梦瑶 查询父类的用户id  -->

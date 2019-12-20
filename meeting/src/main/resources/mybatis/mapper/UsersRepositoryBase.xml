@@ -621,5 +621,28 @@
     <select id="countUser" resultType="java.lang.Integer">
         select count(*) from users
     </select>
+    <!--根据三条件查询user-->
+    <!--李常昊-->
+    <select id="selectByTwo" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        `user_id`
+        from  `users`
+        where `user_name` = #{userName} and `referral_code` = #{referralCode}
+    </select>
+    <!--查询所有鑫管家-->
+<!--李常昊-->
+    <select id="selectAll" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List1"/>
+        from  `users`
+    </select>
+
+
+    <!-- 登录 -->
+    <select id="loginByUserName" parameterType="java.lang.String" resultType="com.suixingpay.entity.Users">
+        select <include refid="Base_Column_List1"/>
+        from `users` where `user_name` = #{userName}
+    </select>
+
 
 </mapper>
