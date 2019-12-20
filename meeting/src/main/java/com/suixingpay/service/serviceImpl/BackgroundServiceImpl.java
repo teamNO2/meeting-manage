@@ -124,13 +124,16 @@ public class BackgroundServiceImpl implements BackgroundService {
     @Override
     public Integer backgroundUpdateStatus(Integer meetingId, Integer check) {
         if(check==0){
-            System.out.println(backgroundRepository.backgroundUpdateStatus0(meetingId));
+            //System.out.println(backgroundRepository.backgroundUpdateStatus0(meetingId));
+            backgroundRepository.backgroundUpdateStatus3(meetingId);
             return backgroundRepository.backgroundUpdateStatus0(meetingId);
         }else if(check==1){
-            System.out.println(backgroundRepository.backgroundUpdateStatus1(meetingId));
+            backgroundRepository.backgroundUpdateStatus3(meetingId);
+            //System.out.println(backgroundRepository.backgroundUpdateStatus1(meetingId));
             return backgroundRepository.backgroundUpdateStatus1(meetingId);
         }else{
-            System.out.println(backgroundRepository.backgroundUpdateStatus2(meetingId));
+            backgroundRepository.backgroundUpdateStatus4(meetingId);
+            //System.out.println(backgroundRepository.backgroundUpdateStatus2(meetingId));
             return backgroundRepository.backgroundUpdateStatus2(meetingId);
         }
     }

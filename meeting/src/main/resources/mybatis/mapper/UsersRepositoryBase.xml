@@ -617,8 +617,9 @@
         where `user_name` = #{userName}
     </select>
 
-
-
-
+    <!-- 石梦瑶 -->
+    <select id="countUser" resultType="java.lang.Integer">
+        select count(*) from users
+    </select>
 
 </mapper>

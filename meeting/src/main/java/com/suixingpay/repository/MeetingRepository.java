@@ -40,5 +40,7 @@ public interface MeetingRepository {
     //查询已经报名的 石梦瑶 0 1
     List<Meeting> selectisapply(String userId);
 
+    String selectRootId(String userId);
 
+    List<Meeting> selectMeetings(String rootId,String userId);
 }

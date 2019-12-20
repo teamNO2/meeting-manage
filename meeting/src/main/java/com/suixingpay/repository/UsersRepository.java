@@ -32,4 +32,7 @@ public interface UsersRepository {
     //根据id查询
     Users selectById(String id);
 
+    Integer countUser();
+
+
 }

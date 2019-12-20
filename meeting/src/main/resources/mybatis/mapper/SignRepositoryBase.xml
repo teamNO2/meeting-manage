@@ -290,5 +290,10 @@
         <include refid="findPageWithWhereLike" />
     </select>
 
+    <select id="countSign" parameterType="com.suixingpay.entity.Sign" resultType="java.lang.Integer">
+        select count(*)
+        from sign
+    </select>
+
 
 </mapper>

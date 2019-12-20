@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface MeetingHomeService {
     List<Meeting> selectisapply(String userId);
+    List<List<Meeting>> selectmeetings(String userId);
 }
