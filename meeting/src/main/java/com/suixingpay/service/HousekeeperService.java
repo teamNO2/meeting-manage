@@ -1,6 +1,9 @@
 package com.suixingpay.service;
 
+import com.suixingpay.entity.Apply;
 import com.suixingpay.entity.Meeting;
+
+import java.util.List;
 
 /*
  *@Author 孙克强
@@ -11,4 +14,10 @@ public interface HousekeeperService {
 
     //根据会议id修改会议
     int updateByPrimaryKey(Meeting meeting);
+
+    //查看报名人数
+    int selectApplyNumberByMeetingId(int meetingId);
+
+    //查看会议报名信息
+    List<Apply> selectApplyByMeetingId(int meetingId);
 }

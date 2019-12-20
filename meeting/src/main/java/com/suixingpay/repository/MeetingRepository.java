@@ -8,6 +8,7 @@
  */
 package com.suixingpay.repository;
 
+import com.suixingpay.entity.Apply;
 import com.suixingpay.entity.Meeting;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -46,4 +47,10 @@ public interface MeetingRepository {
 
     //根据会议id修改会议
     int updateByPrimaryKey(Meeting meeting);
+
+    //查看报名人数
+    int selectApplyNumberByMeetingId(int meetingId);
+
+    //查看会议报名信息
+    List<Apply> selectApplyByMeetingId(int meetingId);
 }

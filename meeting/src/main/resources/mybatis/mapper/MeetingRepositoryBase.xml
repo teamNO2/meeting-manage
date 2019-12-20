@@ -686,4 +686,26 @@
         where s.sign_isapply=1 and s.user_id=#{userId}
     </select>
 
+    <!-- 查看会议报名人数 孙克强-->
+    <select id="selectApplyNumberByMeetingId" parameterType="int" resultType="int">
+        select meeting.meeting_applypersonnumber from `meeting` where `meeting_id` = #{meetingId}
+    </select>
+
+    <!-- applyUsersMeetingMap -->
+    <resultMap id="applyUsersMeetingMap" type="com.suixingpay.entity.Apply">
+        <id column="apply_id" property="applyId" jdbcType="INTEGER"></id>
+        <result column="apply_time" property="applyTime" javaType="java.util.Date"></result>
+        <collection property="usersList" ofType="com.suixingpay.entity.Users">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+    <!-- 查看会议报名信息 -->
+    <select id="selectApplyByMeetingId" parameterType="int" resultMap="applyUsersMeetingMap">
+        SELECT u.user_name,u.telephone,a.apply_time
+        FROM apply a JOIN users u  ON a.user_id = u.id JOIN meeting m ON a.meeting_id = m.meeting_id
+        WHERE a.meeting_id = 1
+    </select>
+
 </mapper>
