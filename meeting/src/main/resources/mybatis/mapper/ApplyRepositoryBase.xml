@@ -290,5 +290,33 @@
         <include refid="findPageWithWhereLike" />
     </select>
 
+    <!--
+        @Auth：柴宇航
+    -->
+    <insert id="insertApply" parameterType="com.suixingpay.entity.Apply">
+        insert into `apply`(user_id,meeting_id,apply_time) values(#{userId},#{meetingId},#{applyTime})
+    </insert>
+
+    <!--
+    柴宇航
+    查询出是否报名这次会议
+-->
+    <select id="isapplyuser" parameterType="com.suixingpay.entity.Apply" resultType="com.suixingpay.entity.Apply">
+        select user_id,meeting_id from apply where meeting_id=#{meeting_id}
+    </select>
+    <!--
+      柴宇航
+  -->
+    <update id="updateissign" parameterType="com.suixingpay.entity.Apply">
+        update apply set apply_issign=#{applyIssign} where meeting_id=#{meetingId}
+    </update>
+
+    <!--
+        柴宇航 姓名、手机号、报名时间
+    -->
+
+
+
+
 
 </mapper>

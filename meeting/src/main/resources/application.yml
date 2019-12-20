@@ -13,7 +13,6 @@ mybatis:
   #指定sql映射文件的位置
   mapper-locations: classpath:mybatis/mapper/*.xml
 
-
 server:
   port: 8080
 

@@ -18,4 +18,6 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.6'
     //webjars
     compile group: 'org.webjars', name: 'jquery', version: '3.3.1-1'
+    compile group: 'com.google.zxing',name: 'core',version: '3.3.0'
+    compile group: 'com.google.zxing',name:'javase',version: '3.3.0'
 }

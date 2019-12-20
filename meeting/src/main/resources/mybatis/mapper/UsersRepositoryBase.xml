@@ -634,4 +634,11 @@
     </select>
 
 
+    <!-- 登录 -->
+    <select id="loginByUserName" parameterType="java.lang.String" resultType="com.suixingpay.entity.Users">
+        select <include refid="Base_Column_List1"/>
+        from `users` where `user_name` = #{userName}
+    </select>
+
+
 </mapper>

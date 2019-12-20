@@ -8,6 +8,7 @@
  */
 package com.suixingpay.repository;
 
+import com.suixingpay.entity.Apply;
 import com.suixingpay.entity.Meeting;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -45,4 +46,24 @@ public interface MeetingRepository {
     List<Meeting> limitDate(@Param("beginDate") Date beginDate,@Param("endDate") Date endDate);
 
     int updatemeetingStatus(int meetingId);
+
+    //根据会议id修改会议
+    int updateByPrimaryKey(Meeting meeting);
+
+    /**
+     * 柴宇航
+     * 查询出会议开始时间和会议时长
+     */
+    Meeting selectstartTimeandtimeLong(int meetingId);
+    /**
+     * 柴宇航
+     * 查询出谁创建的会议
+     */
+    Meeting selectuserId(int meetingId);
+
+    //查看报名人数
+    int selectApplyNumberByMeetingId(int meetingId);
+
+    //查看会议报名信息
+    List<Apply> selectApplyByMeetingId(int meetingId);
 }
