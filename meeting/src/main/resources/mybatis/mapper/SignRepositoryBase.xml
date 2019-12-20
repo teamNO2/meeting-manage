@@ -291,4 +291,18 @@
     </select>
 
 
+    <!--
+        柴宇航
+        签到
+    -->
+    <insert id="insertSignuser" parameterType="com.suixingpay.entity.Sign">
+        insert into sign(user_id,meeting_id,sign_isapply,sign_time) values (#{userId},#{meetingId},#{signIsapply},#{signTime})
+    </insert>
+    <!--
+       柴宇航
+   -->
+    <select id="issignuser" parameterType="com.suixingpay.entity.Sign" resultType="com.suixingpay.entity.Sign">
+        select user_id,meeting_id from sign where meeting_id=#{meetingId}
+    </select>
+
 </mapper>

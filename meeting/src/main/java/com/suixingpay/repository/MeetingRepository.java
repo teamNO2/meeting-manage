@@ -36,4 +36,15 @@ public interface MeetingRepository {
     List<Meeting> findMeetingWithLike(Meeting meeting);
     //根据日期查询
     List<Meeting> limitDate(Date beginDate,Date endDate);
+
+    /**
+     * 柴宇航
+     * 查询出会议开始时间和会议时长
+     */
+    Meeting selectstartTimeandtimeLong(int meetingId);
+    /**
+     * 柴宇航
+     * 查询出谁创建的会议
+     */
+    Meeting selectuserId(int meetingId);
 }

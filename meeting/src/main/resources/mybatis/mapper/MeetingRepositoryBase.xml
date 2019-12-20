@@ -679,7 +679,16 @@
          `meeting_date` between #{beginDate} and #{endDate}
         </if>
     </select>
-
-
-
+    <!--
+      柴宇航
+    -->
+    <select id="selectstartTimeandtimeLong" parameterType="com.suixingpay.entity.Meeting" resultType="com.suixingpay.entity.Meeting">
+        select meeting_starttime,meeting_timelong from meeting where meeting_id=#{meetingId}
+    </select>
+    <!--
+          柴宇航
+     -->
+    <select id="selectuserId" parameterType="com.suixingpay.entity.Meeting" resultType="com.suixingpay.entity.Meeting">
+        select user_id from meeting where meeting_id=#{meetingId}
+    </select>
 </mapper>
