@@ -685,6 +685,18 @@
         from  `meeting` as m left join sign as s on m.meeting_id=s.meeting_id
         where s.sign_isapply=1 and s.user_id=#{userId}
     </select>
+    <!--
+      柴宇航
+    -->
+    <select id="selectstartTimeandtimeLong" parameterType="com.suixingpay.entity.Meeting" resultType="com.suixingpay.entity.Meeting">
+        select meeting_starttime,meeting_timelong from meeting where meeting_id=#{meetingId}
+    </select>
+    <!--
+          柴宇航
+     -->
+    <select id="selectuserId" parameterType="com.suixingpay.entity.Meeting" resultType="com.suixingpay.entity.Meeting">
+        select user_id from meeting where meeting_id=#{meetingId}
+    </select>
 
     <!-- 查看会议报名人数 孙克强-->
     <select id="selectApplyNumberByMeetingId" parameterType="int" resultType="int">
