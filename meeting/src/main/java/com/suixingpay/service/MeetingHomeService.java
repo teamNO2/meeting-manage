@@ -15,4 +15,5 @@ public interface MeetingHomeService {
     List<Meeting> selectisapply(String userId);
     //改变会议状态
     int updatemeetingStatus(int meetingId);
+    List<List<Meeting>> selectmeetings(String userId);
 }

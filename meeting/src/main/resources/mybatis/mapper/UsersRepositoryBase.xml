@@ -617,6 +617,10 @@
         where `user_name` = #{userName}
     </select>
 
+    <!-- 石梦瑶 -->
+    <select id="countUser" resultType="java.lang.Integer">
+        select count(*) from users
+    </select>
     <!--根据三条件查询user-->
     <!--李常昊-->
     <select id="selectByTwo" parameterType="java.lang.String" resultMap="BaseResultMap" >

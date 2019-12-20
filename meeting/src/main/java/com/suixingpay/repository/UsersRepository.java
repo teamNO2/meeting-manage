@@ -34,6 +34,9 @@ public interface UsersRepository {
     //根据id查询
     Users selectById(String id);
 
+    Integer countUser();
+
+
     Users selectByTwo(@Param("userName") String userName, @Param("referralCode") String referralCode);
 
     List<Users> selectAll();

@@ -168,4 +168,19 @@
         where meeting_id = #{meetingId}
     </update>
 
+    <update id="backgroundUpdateStatus3" parameterType="java.lang.Integer">
+        update `meeting`
+        <set >
+            `meeting_status` =0
+        </set>
+        where meeting_id = #{meetingId}
+    </update>
+
+    <update id="backgroundUpdateStatus4" parameterType="java.lang.Integer">
+        update `meeting`
+        <set >
+            `meeting_status` =1
+        </set>
+        where meeting_id = #{meetingId}
+    </update>
 </mapper>

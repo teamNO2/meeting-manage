@@ -727,5 +727,16 @@
         WHERE a.meeting_id = 1
     </select>
 
+    <!--  石梦瑶 查询父类的用户id  -->
+    <select id="selectRootId" parameterType="java.lang.String" resultType="java.lang.String" >
+       select root_user_id from users where user_id = #{userId}
+    </select>
+
+    <select id="selectMeetings" parameterType="java.lang.String" resultType="com.suixingpay.entity.Meeting">
+        select m.* from
+        meeting m inner JOIN apply a on a.meeting_id = m.meeting_id
+        where m.user_id = #{rootId} and  a.user_id!=#{userId} AND m.meeting_id NOT in
+        (select meeting_id from apply where user_id=#{rootId})
+    </select>
 
 </mapper>
