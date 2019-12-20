@@ -60,4 +60,6 @@ public class Users {
     private Long CURRENTCONNECTIONS;
     /**  **/
     private Long TOTALCONNECTIONS;
+    /** 密码 **/
+    private String password;
 }
