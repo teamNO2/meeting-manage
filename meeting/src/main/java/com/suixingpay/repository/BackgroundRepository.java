@@ -40,4 +40,7 @@ public interface BackgroundRepository {
 
     Integer backgroundUpdateStatus2(Integer meetingId);
 
+    void backgroundUpdateStatus3(Integer meetingId);
+
+    void backgroundUpdateStatus4(Integer meetingId);
 }

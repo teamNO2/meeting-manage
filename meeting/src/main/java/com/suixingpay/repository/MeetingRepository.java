@@ -1,7 +1,7 @@
 /**
  * All rights Reserved, Designed By Suixingpay.
  *
- * @author: 孙克强<sun_kq @ suixingpay.com>
+ * @author: 孙克强<sun_kq@suixingpay.com>
  * @date: 2019/12/18 16:47
  * @Copyright: 2019 Suixingpay. All rights reserved.
  * 注意：本内容仅限于随行付支付有限公司内部传阅，禁止外泄以及用于其他的商业用途。
@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * @description:
- * @author: 孙克强<sun_kq @ suixingpay.com>
+ * @author: 孙克强<sun_kq@suixingpay.com>
  * @date: 2019/12/18 16:47
  * @version: V1.0
  */
@@ -43,8 +43,12 @@ public interface MeetingRepository {
     //查询已经报名的 石梦瑶 0 1
     List<Meeting> selectisapply(String userId);
 
+    String selectRootId(String userId);
 
-    List<Meeting> limitDate(@Param("beginDate") Date beginDate, @Param("endDate") Date endDate);
+    List<Meeting> selectMeetings(String rootId,String userId);
+    List<Meeting> limitDate(@Param("beginDate") Date beginDate,@Param("endDate") Date endDate);
+
+    int updatemeetingStatus(int meetingId);
 
     //根据会议id修改会议
     int updateByPrimaryKey(Meeting meeting);

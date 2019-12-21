@@ -27,4 +27,5 @@ public interface SignRepository {
     int insertSignuser(String userId, int meetingId, int signIsapply, Date signTime);
 
     List<Sign> issignuser(int meentingId);
+    Integer countSign();
 }

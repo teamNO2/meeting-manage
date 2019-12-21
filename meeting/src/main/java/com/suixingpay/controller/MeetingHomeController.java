@@ -32,4 +32,15 @@ public class MeetingHomeController {
             return () -> GenericResponse.failed("999", "查询失败");
         }
     }
+
+    //查询未报名的
+    @GetMapping("/selectmeetings/{userId}")
+    public Callable<GenericResponse> selectmeetings(@PathVariable("userId") String userId) {
+        List<List<Meeting >> meetingList = meetingHomeService.selectmeetings(userId);
+        if (meetingList != null) {
+            return () -> GenericResponse.success("666", "查询成功", meetingList);
+        } else {
+            return () -> GenericResponse.failed("999", "查询失败");
+        }
+    }
 }
