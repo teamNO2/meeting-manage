@@ -36,4 +36,9 @@ public class HousekeeperServiceImpl implements HousekeeperService {
     public List<Apply> selectApplyByMeetingId(int meetingId) {
         return meetingRepository.selectApplyByMeetingId(meetingId);
     }
+
+    @Override
+    public int myUpdateMeetingById(Meeting meeting) {
+        return meetingRepository.myUpdateMeetingById(meeting);
+    }
 }

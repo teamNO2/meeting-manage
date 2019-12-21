@@ -33,6 +33,7 @@ public interface MeetingRepository {
 
     //插入会议
     int insertSelective(Meeting meeting);
+
     //模糊查询
     List<Meeting> findMeetingWithLike(Meeting meeting);
     //根据日期查询
@@ -63,11 +64,15 @@ public interface MeetingRepository {
     //根据会议id修改会议
     int updateByPrimaryKey(Meeting meeting);
 
+    //myUpdateMeetingById
+    int myUpdateMeetingById(Meeting meeting);
+
     /**
      * 柴宇航
      * 查询出会议开始时间和会议时长
      */
     Meeting selectstartTimeandtimeLong(int meetingId);
+
     /**
      * 柴宇航
      * 查询出谁创建的会议
