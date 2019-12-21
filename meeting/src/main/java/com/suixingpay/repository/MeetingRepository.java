@@ -42,17 +42,13 @@ public interface MeetingRepository {
     //查询已经报名的 石梦瑶 0 1
     List<Meeting> selectisapply(String userId);
 
-    //查询没有报名的 并且只能看见父亲辈创建的会议
-    List<Meeting> selectrootdesc(String userId);
 
     //查询父辈的userID
     String selectRootId(String userId);
 
     //查询所有会议详细信息
-    List<Meeting> selectByIddesc(String meeting);
+    Meeting selectByIddesc(String meeting);
 
-    //查询没有邀请码的
-    List<Meeting> selectnocode();
 
     //用userID查询meetingID
     List<Meeting> selectbyuserId(String userId);
@@ -61,9 +57,11 @@ public interface MeetingRepository {
 
     List<Meeting> limitDate(@Param("beginDate") Date beginDate,@Param("endDate") Date endDate);
 
+
     //根据会议id修改会议
     int updateByPrimaryKey(Meeting meeting);
 
+    int updatemeetingStatus(int meetingId);
     //myUpdateMeetingById
     int myUpdateMeetingById(Meeting meeting);
 

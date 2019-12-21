@@ -3,6 +3,7 @@ package com.suixingpay.controller;
 import com.suixingpay.entity.Meeting;
 import com.suixingpay.service.MeetingHomeService;
 import com.suixingpay.utils.GenericResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.concurrent.Callable;
  */
 @RestController
 @RequestMapping("/home")
+@Slf4j
 public class MeetingHomeController {
     @Autowired
     MeetingHomeService meetingHomeService;
@@ -26,8 +28,10 @@ public class MeetingHomeController {
     //查询已经报名的
     @GetMapping("/selectisapply/{userId}")
     public Callable<GenericResponse> selectisapply(@PathVariable("userId") String userId) {
+        log.info("进入selectisapply接口，参数:userId = " + userId);
         List<Meeting>  meetings = meetingHomeService.selectisapply(userId);
         if (meetings != null) {
+            log.info("查询成功，结果 = " + meetings);
             return () -> GenericResponse.success("666", "查询成功", meetings);
         } else {
             return () -> GenericResponse.failed("999", "查询失败");
@@ -45,42 +49,26 @@ public class MeetingHomeController {
         }
     }
 
-//    //无邀请码会议
-//    @GetMapping("/selectnocode")
-//    public Callable<GenericResponse> selectnocode(String userId) {
-//        List<Meeting>  meetings = meetingHomeService.selectnocode();
-//
-//        List<Meeting> meetingList = meetingHomeService.selectbyuserId(userId);
-//        Date date = new Date();
-//        for(Meeting meeting : meetingList) {
-//
-////            if(date.before(meeting.getMeetingEndtime() && date.after(meeting.getMeetingStarttime()))){
-////                //当前时间在报名 截止之前  报名中
-////            }
-////            if(new Date().after(meeting.getMeetingEndtime())){
-////
-////                //当前时间在报名截止之后   报名截止
-////            }else {
-////
-////            }
-//
-//        }
-//
-//        if (meetings != null) {
-//            return () -> GenericResponse.success("666", "查询成功", meetings);
-//        } else {
-//            return () -> GenericResponse.failed("999", "查询失败");
-//        }
-//    }
-
     //点击进入会议详情 根据用户id查询会议详情
     @GetMapping("/selectByIddesc/{meetingId}")
     public Callable<GenericResponse> selectByIddesc(@PathVariable("meetingId") String meetingId) {
-        List<Meeting>  meetings = meetingHomeService.selectByIddesc(meetingId);
+        Meeting meetings = meetingHomeService.selectByIddesc(meetingId);
+        Date date = new Date();
 
-
-        if (meetings != null) {
+        if(date.before(meetingHomeService.selectByIddesc(meetingId).getMeetingEndtime()) && meetings != null){
             return () -> GenericResponse.success("666", "查询成功", meetings);
+        }else{
+            meetingHomeService.updatemeetingStatus(Integer.valueOf(meetingId));
+            Meeting meetings1 = meetingHomeService.selectByIddesc(meetingId);
+            log.info(meetings1.toString());
+            return () -> GenericResponse.success("999", "查询成功",meetings1);
+        }
+    }
+    @GetMapping("/selectbyuserId/{userId}")
+    public Callable<GenericResponse> selectbyuserId(@PathVariable("userId") String userId) {
+        List<Meeting > meetingList = meetingHomeService.selectbyuserId(userId);
+        if (meetingList != null) {
+            return () -> GenericResponse.success("666", "查询成功", meetingList);
         } else {
             return () -> GenericResponse.failed("999", "查询失败");
         }
