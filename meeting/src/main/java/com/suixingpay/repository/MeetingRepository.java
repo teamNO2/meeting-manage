@@ -10,6 +10,7 @@ package com.suixingpay.repository;
 
 import com.suixingpay.entity.Apply;
 import com.suixingpay.entity.Meeting;
+import com.suixingpay.entity.Sign;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -73,4 +74,7 @@ public interface MeetingRepository {
 
     //查看会议报名信息
     List<Apply> selectApplyByMeetingId(int meetingId);
+
+    //查看会议签到信息
+    List<Sign> selectSignByMeetingId(int meetingId);
 }

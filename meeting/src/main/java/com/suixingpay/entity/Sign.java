@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,7 @@ public class Sign {
     /** 是否报名 **/
     private Integer signIsapply;
     /** 签到时间 **/
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date signTime;
     /** 用户集合 **/
     private List<Users> usersList;

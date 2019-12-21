@@ -2,6 +2,7 @@ package com.suixingpay.controller;
 
 import com.suixingpay.entity.Apply;
 import com.suixingpay.entity.Meeting;
+import com.suixingpay.entity.Sign;
 import com.suixingpay.service.HelloService;
 import com.suixingpay.service.HousekeeperService;
 import com.suixingpay.utils.GenericResponse;
@@ -11,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -119,6 +119,7 @@ public class HousekeeperController {
 
 
     //查看会议报名人数---孙克强
+    @ApiOperation("查看会议报名人数")
     @GetMapping("/getApplyNumberByMeetingId/{meetingId}")
     public Callable<GenericResponse> getApplyNumberByMeetingId(@PathVariable("meetingId") Integer meetingId) {
         int i = housekeeperService.selectApplyNumberByMeetingId(meetingId);
@@ -126,11 +127,24 @@ public class HousekeeperController {
     }
 
     //查看会议报名信息---孙克强
+    @ApiOperation("查看会议报名信息")
     @GetMapping("/getApplyByMeetingId/{meetingId}")
     public Callable<GenericResponse> getApplyByMeetingId(@PathVariable("meetingId") Integer meetingId) {
         List<Apply> applies = housekeeperService.selectApplyByMeetingId(meetingId);
         if (applies != null) {
             return () -> GenericResponse.success("666", "查询成功", applies);
+        } else {
+            return () -> GenericResponse.failed("999", "查询失败");
+        }
+    }
+
+    //查看会议签到信息---孙克强
+    @ApiOperation("查看会议签到信息")
+    @GetMapping("/getSignByMeetingId/{meetingId}")
+    public Callable<GenericResponse> getSignByMeetingId(@PathVariable("meetingId") Integer meetingId) {
+        List<Sign> signs = housekeeperService.selectSignByMeetingId(meetingId);
+        if (signs != null) {
+            return () -> GenericResponse.success("666", "查询成功", signs);
         } else {
             return () -> GenericResponse.failed("999", "查询失败");
         }

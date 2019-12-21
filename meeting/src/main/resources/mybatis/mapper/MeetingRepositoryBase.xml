@@ -749,4 +749,23 @@
         where `meeting_id` = #{meetingId}
     </update>
 
+    <!-- signUsersMeetingMap 孙克强 -->
+    <resultMap id="signUsersMeetingMap" type="com.suixingpay.entity.Sign">
+        <id column="sign_id" property="signId" jdbcType="INTEGER"></id>
+        <result column="sign_time" property="signTime" javaType="java.util.Date"></result>
+        <collection property="usersList" ofType="com.suixingpay.entity.Users">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+    <!-- 查看会议签到信息 孙克强 -->
+    <select id="selectSignByMeetingId" parameterType="int" resultMap="signUsersMeetingMap">
+        SELECT u.user_name,u.telephone,s.sign_time
+        FROM `sign` s JOIN `users` u  ON s.user_id = u.id JOIN `meeting` m ON s.meeting_id = m.meeting_id
+        WHERE s.meeting_id = #{meetingId}
+    </select>
+
+
+
 </mapper>
