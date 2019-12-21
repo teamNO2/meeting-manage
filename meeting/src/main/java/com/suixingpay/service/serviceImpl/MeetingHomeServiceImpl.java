@@ -35,11 +35,11 @@ public class MeetingHomeServiceImpl implements MeetingHomeService {
     }
 
     //更改状态
-    @Override
-    public int updatemeetingStatus(int meetingId) {
-
-        return meetingRepository.updatemeetingStatus(meetingId);
-    }
+//    @Override
+//    public int updatemeetingStatus(int meetingId) {
+//
+//        return meetingRepository.updatemeetingStatus(meetingId);
+//    }
 
     //查询未报名的
     @Override
