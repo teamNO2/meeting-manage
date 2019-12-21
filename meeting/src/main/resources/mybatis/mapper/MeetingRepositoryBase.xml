@@ -678,6 +678,13 @@
         where  `meeting_date` between #{beginDate} and #{endDate}
     </select>
 
+<!--    // 石梦瑶 查询这个鑫管家已经报名的活动-->
+    <select id="selectisapply" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        m.*
+        from  `meeting` as m left join sign as s on m.meeting_id=s.meeting_id
+        where s.sign_isapply=1 and s.user_id=#{userId}
+    </select>
 
 
     <update id="updatemeetingStatus" parameterType="int">
@@ -703,7 +710,7 @@
         select meeting.meeting_applypersonnumber from `meeting` where `meeting_id` = #{meetingId}
     </select>
 
-    <!-- applyUsersMeetingMap -->
+    <!-- applyUsersMeetingMap 孙克强 -->
     <resultMap id="applyUsersMeetingMap" type="com.suixingpay.entity.Apply">
         <id column="apply_id" property="applyId" jdbcType="INTEGER"></id>
         <result column="apply_time" property="applyTime" javaType="java.util.Date"></result>
@@ -725,8 +732,6 @@
        select root_user_id from users where user_id = #{userId}
     </select>
 
-
-<!--    查询未报名的会议-->
     <select id="selectMeetings" parameterType="java.lang.String" resultType="com.suixingpay.entity.Meeting">
         select m.* from
         meeting m inner JOIN apply a on a.meeting_id = m.meeting_id
@@ -773,6 +778,25 @@
         from meeting m where user_id = #{userId}
         ORDER BY m.meeting_status
     </select>
+
+
+    <!-- signUsersMeetingMap 孙克强 -->
+    <resultMap id="signUsersMeetingMap" type="com.suixingpay.entity.Sign">
+        <id column="sign_id" property="signId" jdbcType="INTEGER"></id>
+        <result column="sign_time" property="signTime" javaType="java.util.Date"></result>
+        <collection property="usersList" ofType="com.suixingpay.entity.Users">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+    <!-- 查看会议签到信息 孙克强 -->
+    <select id="selectSignByMeetingId" parameterType="int" resultMap="signUsersMeetingMap">
+        SELECT u.user_name,u.telephone,s.sign_time
+        FROM `sign` s JOIN `users` u  ON s.user_id = u.id JOIN `meeting` m ON s.meeting_id = m.meeting_id
+        WHERE s.meeting_id = #{meetingId}
+    </select>
+
 
 
 </mapper>
