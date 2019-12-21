@@ -703,7 +703,7 @@
         select meeting.meeting_applypersonnumber from `meeting` where `meeting_id` = #{meetingId}
     </select>
 
-    <!-- applyUsersMeetingMap -->
+    <!-- applyUsersMeetingMap 孙克强 -->
     <resultMap id="applyUsersMeetingMap" type="com.suixingpay.entity.Apply">
         <id column="apply_id" property="applyId" jdbcType="INTEGER"></id>
         <result column="apply_time" property="applyTime" javaType="java.util.Date"></result>
@@ -713,11 +713,21 @@
             <result column="telephone" property="telephone" jdbcType="VARCHAR" />
         </collection>
     </resultMap>
-    <!-- 查看会议报名信息 -->
+    <!-- 查看会议报名信息 孙克强 -->
     <select id="selectApplyByMeetingId" parameterType="int" resultMap="applyUsersMeetingMap">
         SELECT u.user_name,u.telephone,a.apply_time
         FROM apply a JOIN users u  ON a.user_id = u.id JOIN meeting m ON a.meeting_id = m.meeting_id
         WHERE a.meeting_id = 1
     </select>
+
+    <!-- 自定义根据id修改会议 孙克强 -->
+    <update id="myUpdateMeetingById" parameterType="com.suixingpay.entity.Meeting">
+        update `meeting` set `meeting_checkstatus` = #{meetingCheckstatus},`meeting_type` = #{meetingType},
+        `meeting_name` = #{meetingName},`meeting_create` = #{meetingCreate},`meeting_salary` = #{meetingSalary},
+        `meeting_starttime` = #{meetingStarttime},`meeting_endtime` = #{meetingEndtime},
+        `meeting_timelong` = #{meetingTimelong},`meeting_address` = #{meetingAddress},
+        `meeting_alladdress` = #{meetingAlladdress},`meeting_describe` = #{meetingDescribe}
+        where `meeting_id` = #{meetingId}
+    </update>
 
 </mapper>
