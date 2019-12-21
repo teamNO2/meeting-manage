@@ -8,6 +8,7 @@
  */
 package com.suixingpay.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,6 +40,7 @@ public class Sign {
     /** 是否报名 **/
     private Integer signIsapply;
     /** 签到时间 **/
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date signTime;
     /** 用户集合 **/
