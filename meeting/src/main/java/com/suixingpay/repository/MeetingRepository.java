@@ -25,7 +25,6 @@ import java.util.List;
  * @version: V1.0
  */
 @Mapper
-@Repository
 public interface MeetingRepository {
     //按meeting-id查询
     public Meeting selectById(String meetingId);
@@ -44,16 +43,26 @@ public interface MeetingRepository {
     //查询已经报名的 石梦瑶 0 1
     List<Meeting> selectisapply(String userId);
 
+
+    //查询父辈的userID
     String selectRootId(String userId);
 
+    //查询所有会议详细信息
+    Meeting selectByIddesc(String meeting);
+
+
+    //用userID查询meetingID
+    List<Meeting> selectbyuserId(String userId);
+
     List<Meeting> selectMeetings(String rootId,String userId);
+
     List<Meeting> limitDate(@Param("beginDate") Date beginDate,@Param("endDate") Date endDate);
 
-    int updatemeetingStatus(int meetingId);
 
     //根据会议id修改会议
     int updateByPrimaryKey(Meeting meeting);
 
+    int updatemeetingStatus(int meetingId);
     //myUpdateMeetingById
     int myUpdateMeetingById(Meeting meeting);
 

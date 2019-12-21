@@ -34,11 +34,14 @@ public class MeetingHomeServiceImpl implements MeetingHomeService {
         return meetingRepository.selectisapply(userId);
     }
 
+    //更改状态
     @Override
     public int updatemeetingStatus(int meetingId) {
+
         return meetingRepository.updatemeetingStatus(meetingId);
     }
 
+    //查询未报名的
     @Override
     public List<List<Meeting>> selectmeetings(String userId) {
         String a = userId;
@@ -52,4 +55,16 @@ public class MeetingHomeServiceImpl implements MeetingHomeService {
         }
         return meetingList;
     }
+
+    @Override
+    public Meeting selectByIddesc(String meetingId) {
+        return meetingRepository.selectByIddesc(meetingId);
+    }
+
+    @Override
+    public List<Meeting> selectbyuserId(String userId) {
+        return meetingRepository.selectbyuserId(userId);
+    }
+
+
 }
