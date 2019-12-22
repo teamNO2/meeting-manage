@@ -8,7 +8,9 @@ import com.suixingpay.service.MeetingHomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,33 +43,35 @@ public class MeetingHomeServiceImpl implements MeetingHomeService {
         return meetingRepository.updatemeetingStatus(meetingId);
     }
 
-    //查询未报名的
     @Override
     public List<List<Meeting>> selectmeetings(String userId) {
         String a = userId;
         List<String > list = new ArrayList<>();
         List<List<Meeting>> meetingList = new ArrayList<>();
         list.add(meetingRepository.selectRootId(userId));
-        //System.out.println(list);
-        //System.out.println("*********");
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (int i = 0 ;i < usersRepository.countUser()+signRepository.countSign(); i++ ){
             userId = meetingRepository.selectRootId(userId);
             list.add(meetingRepository.selectRootId(userId));
             //System.out.println(list);
             if((list.get(i)!=null)&&(list.get(i)!="")) {
-                meetingList.add(meetingRepository.selectMeetings(list.get(i), a));
+                meetingList.add(meetingRepository.selectMeeting1(list.get(i),a,sdf.format(date)));
             }
         }
-        meetingList.add(meetingRepository.selectMeetings2(a));
+        meetingList.add(meetingRepository.selectMeeting2(a,sdf.format(date)));
+        System.out.println(meetingList);
         for (int i = 0 ;i<meetingList.size();i++){
             if(meetingList.get(i).isEmpty()){
                 meetingList.remove(i);
                 i--;
             }
         }
+        System.out.println(meetingList.size());
         //System.out.println(meetingList);
         return meetingList;
     }
+
 
     @Override
     public Meeting selectByIddesc(String meetingId) {

@@ -55,8 +55,9 @@ public interface MeetingRepository {
     //用userID查询meetingID
     List<Meeting> selectbyuserId(String userId);
 
-    List<Meeting> selectMeetings(String rootId,String userId);
-    List<Meeting> selectMeetings2(String userId);
+    List<Meeting> selectMeeting1(String rootId,String userId,String date);
+    List<Meeting> selectMeeting2(String userId,String date);
+
 
     List<Meeting> limitDate(@Param("beginDate") Date beginDate,@Param("endDate") Date endDate);
 
@@ -87,4 +88,5 @@ public interface MeetingRepository {
 
     //查看会议签到信息
     List<Sign> selectSignByMeetingId(int meetingId);
+
 }

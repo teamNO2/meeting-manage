@@ -725,20 +725,6 @@
        select root_user_id from users where user_id = #{userId}
     </select>
 
-    <select id="selectMeetings" parameterType="java.lang.String" resultType="com.suixingpay.entity.Meeting">
-        select m.* from
-        meeting m inner JOIN apply a on a.meeting_id = m.meeting_id
-        where m.user_id = #{rootId} and  a.user_id!=#{userId} AND m.meeting_id not in
-        (select meeting_id from apply where user_id=#{userId})
-
-    </select>
-
-    <select id="selectMeetings2" parameterType="java.lang.String" resultType="com.suixingpay.entity.Meeting">
-        select m.* from
-        meeting m inner JOIN apply a on a.meeting_id = m.meeting_id
-        where m.user_id = -1 and  a.user_id!=#{userId} AND m.meeting_id not in
-        (select meeting_id from apply where user_id=#{userId})
-    </select>
 
     <!-- 自定义根据id修改会议 孙克强 -->
     <update id="myUpdateMeetingById" parameterType="com.suixingpay.entity.Meeting">
@@ -794,7 +780,42 @@
         WHERE s.meeting_id = #{meetingId}
     </select>
 
-
+    <select id="selectMeeting1" parameterType="java.lang.String" resultType="com.suixingpay.entity.Meeting">
+        (select m.* from meeting m LEFT JOIN
+        apply a on m.meeting_id = a.meeting_id
+        where m.meeting_endtime > #{date}
+        and m.user_id = #{rootId}
+        and m.meeting_checkstatus = 2
+        and m.meeting_id in
+        (select meeting_id from apply where a.user_id != #{userId}))
+        union
+        (select m.* from meeting m LEFT JOIN
+        apply a on m.meeting_id = a.meeting_id
+        where m.meeting_endtime > #{date}
+        and m.user_id = #{rootId}
+        and m.meeting_checkstatus = 2
+        and m.meeting_id not in
+        (select meeting_id from apply)
+        )
+    </select>
+    <select id="selectMeeting2" parameterType="java.lang.String" resultType="com.suixingpay.entity.Meeting">
+        (select m.* from meeting m LEFT JOIN
+        apply a on m.meeting_id = a.meeting_id
+        where m.meeting_endtime > #{date}
+        and m.user_id = -1
+        and m.meeting_checkstatus = 2
+        and m.meeting_id in
+        (select meeting_id from apply where a.user_id != #{userId}))
+        union
+        (select m.* from meeting m LEFT JOIN
+        apply a on m.meeting_id = a.meeting_id
+        where m.meeting_endtime > #{date}
+        and m.user_id = -1
+        and m.meeting_checkstatus = 2
+        and m.meeting_id not in
+        (select meeting_id from apply)
+        )
+    </select>
 
 
 </mapper>
