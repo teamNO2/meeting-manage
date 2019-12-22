@@ -45,11 +45,24 @@ public class MeetingHomeServiceImpl implements MeetingHomeService {
         List<String > list = new ArrayList<>();
         List<List<Meeting>> meetingList = new ArrayList<>();
         list.add(meetingRepository.selectRootId(userId));
+        //System.out.println(list);
+        //System.out.println("*********");
         for (int i = 0 ;i < usersRepository.countUser()+signRepository.countSign(); i++ ){
             userId = meetingRepository.selectRootId(userId);
             list.add(meetingRepository.selectRootId(userId));
-            meetingList.add(meetingRepository.selectMeetings(list.get(i),a));
+            //System.out.println(list);
+            if((list.get(i)!=null)&&(list.get(i)!="")) {
+                meetingList.add(meetingRepository.selectMeetings(list.get(i), a));
+            }
         }
+        meetingList.add(meetingRepository.selectMeetings2(a));
+        for (int i = 0 ;i<meetingList.size();i++){
+            if(meetingList.get(i).isEmpty()){
+                meetingList.remove(i);
+                i--;
+            }
+        }
+        //System.out.println(meetingList);
         return meetingList;
     }
 }

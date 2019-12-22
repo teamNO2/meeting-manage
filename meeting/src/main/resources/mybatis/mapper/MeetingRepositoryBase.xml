@@ -735,8 +735,17 @@
     <select id="selectMeetings" parameterType="java.lang.String" resultType="com.suixingpay.entity.Meeting">
         select m.* from
         meeting m inner JOIN apply a on a.meeting_id = m.meeting_id
-        where m.user_id = #{rootId} and  a.user_id!=#{userId} AND m.meeting_id NOT in
-        (select meeting_id from apply where user_id=#{rootId})
+        where m.user_id = #{rootId} and  a.user_id!=#{userId} AND m.meeting_id not in
+        (select meeting_id from apply where user_id=#{userId})
+
     </select>
+
+    <select id="selectMeetings2" parameterType="java.lang.String" resultType="com.suixingpay.entity.Meeting">
+        select m.* from
+        meeting m inner JOIN apply a on a.meeting_id = m.meeting_id
+        where m.user_id = -1 and  a.user_id!=#{userId} AND m.meeting_id not in
+        (select meeting_id from apply where user_id=#{userId})
+    </select>
+
 
 </mapper>

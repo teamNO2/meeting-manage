@@ -45,6 +45,7 @@ public interface MeetingRepository {
     String selectRootId(String userId);
 
     List<Meeting> selectMeetings(String rootId,String userId);
+    List<Meeting> selectMeetings2(String userId);
     List<Meeting> limitDate(@Param("beginDate") Date beginDate,@Param("endDate") Date endDate);
 
     int updatemeetingStatus(int meetingId);
