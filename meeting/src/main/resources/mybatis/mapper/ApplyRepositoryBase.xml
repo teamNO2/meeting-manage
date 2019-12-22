@@ -302,7 +302,7 @@
     查询出是否报名这次会议
 -->
     <select id="isapplyuser" parameterType="com.suixingpay.entity.Apply" resultType="com.suixingpay.entity.Apply">
-        select user_id,meeting_id from apply where meeting_id=#{meeting_id}
+        select user_id,meeting_id from apply where meeting_id=#{meetingId} and user_id=#{userId}
     </select>
     <!--
       柴宇航

@@ -23,7 +23,7 @@ public interface ApplyService {
      * @param meetingId
      * @return
      */
-    List<Apply> isapplyuser(int meetingId);
+    List<Apply> isapplyuser(int meetingId,String userId);
 
     /**
      * @Author 柴宇航

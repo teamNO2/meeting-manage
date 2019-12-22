@@ -41,7 +41,7 @@ public class SignController {
         Date date = new Date();
 
         log.info("通过meetingId获取报名表里的userId(目的在于后期判断此用户是否报名过)");
-        List<Apply> isapplyuser = applyService.isapplyuser(meettingId);
+        List<Apply> isapplyuser = applyService.isapplyuser(meettingId,userId);
 
         log.info("通过meetingId获取签到表里的userId(目的在于后期判断此用户是否重复签到)");
         List<Sign> issignuser = signService.issignuser(meettingId);
@@ -52,9 +52,10 @@ public class SignController {
             String userId1 = a.getUserId();
 
             //判断获取到的userId和传过来的userId是否相等，如果相等则报名过，不相等没有报名
-            log.info("判断当前传过来的userId和报名表里的userId是否一直，如果相等报名过，反之");
+            log.info("判断当前传过来的userId和报名表里的userId是否一致，如果相等报名过，反之");
+            System.out.println(userId1);
+            System.out.println(userId);
             if (userId1.equals(userId)) {
-
                 //获取会议开始时间和会议时长
                 Meeting meeting = meetingService.selectstartTimeandtimeLong(meettingId);
                 Date meetingStarttime=meeting.getMeetingStarttime();
@@ -73,7 +74,9 @@ public class SignController {
                 //判断若鑫管家重复扫码签到，则扫码后提示"您已经签到过，无需重新签到";
                 log.info("判断鑫管家重复扫码签到");
                 for(Sign s:issignuser) {
-                    if (s.getUserId().equals(userId)) {
+                    String signId=s.getUserId();
+                    if (signId.equals(userId)) {
+                        System.out.println(signId);
                         return () -> GenericResponse.failed("insertSignuser999", "您已经签到过，无需重新签到");
                     }
                 }

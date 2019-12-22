@@ -30,8 +30,8 @@ public class ApplyServiceImpl implements ApplyService {
      * @param meetingId
      * @return
      */
-    public List<Apply> isapplyuser(int meetingId) {
-        return applyRepository.isapplyuser(meetingId);
+    public List<Apply> isapplyuser(int meetingId,String userId) {
+        return applyRepository.isapplyuser(meetingId,userId);
     }
 
     /**

@@ -4,7 +4,6 @@ import com.suixingpay.entity.Apply;
 import com.suixingpay.entity.Meeting;
 import com.suixingpay.service.ApplyService;
 import com.suixingpay.service.MeetingService;
-import com.suixingpay.service.SignService;
 import com.suixingpay.utils.GenericResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +36,7 @@ public class ApplyController {
                                                  @RequestParam("meetingId") Integer meetingId) {
         Date date = new Date();
         log.info("通过meetingId查询出鑫管家是否报名过");
-        List<Apply> isapplyuser = applyService.isapplyuser(meetingId);
+        List<Apply> isapplyuser = applyService.isapplyuser(meetingId,userId);
 
         log.info("通过meetingId查询出次会议是否是当前鑫管家所建立");
         Meeting meeting = meetingService.selectuserId(meetingId);
