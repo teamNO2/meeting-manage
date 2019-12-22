@@ -2,6 +2,7 @@ package com.suixingpay.service;
 
 import com.suixingpay.entity.Apply;
 import com.suixingpay.entity.Meeting;
+import com.suixingpay.entity.Sign;
 
 import java.util.List;
 
@@ -20,4 +21,10 @@ public interface HousekeeperService {
 
     //查看会议报名信息
     List<Apply> selectApplyByMeetingId(int meetingId);
+
+    //myUpdateMeetingById
+    int myUpdateMeetingById(Meeting meeting);
+
+    //查看会议签到信息
+    List<Sign> selectSignByMeetingId(int meetingId);
 }
