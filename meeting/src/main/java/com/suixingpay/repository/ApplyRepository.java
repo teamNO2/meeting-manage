@@ -26,7 +26,7 @@ import java.util.List;
 public interface ApplyRepository {
     int insertApply(String userId, int meetingId, Date applyTime);
 
-    List<Apply> isapplyuser(int meetingId);
+    List<Apply> isapplyuser(int meetingId,String userId);
 
     int updateissign(int applyIssign,int meetingId);
 }
