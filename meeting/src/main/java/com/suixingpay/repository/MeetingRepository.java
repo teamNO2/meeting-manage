@@ -57,6 +57,8 @@ public interface MeetingRepository {
 
     List<Meeting> selectMeetings(String rootId,String userId);
     List<Meeting> selectMeetings2(String userId);
+    List<Meeting> selectMeetings3(String userId,String date);
+    List<Meeting> selectMeetings4(String userId,String date);
 
     List<Meeting> limitDate(@Param("beginDate") Date beginDate,@Param("endDate") Date endDate);
 

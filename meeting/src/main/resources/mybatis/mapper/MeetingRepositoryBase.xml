@@ -1,216 +1,216 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.suixingpay.repository.MeetingRepository" >
+<mapper namespace="com.suixingpay.repository.MeetingRepository">
 
-    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Meeting" >
-        <id column="meeting_id" property="meetingId" jdbcType="INTEGER" />
-        <result column="meeting_type" property="meetingType" jdbcType="INTEGER" />
-        <result column="meeting_name" property="meetingName" jdbcType="VARCHAR" />
-        <result column="meeting_create" property="meetingCreate" jdbcType="VARCHAR" />
-        <result column="meeting_salary" property="meetingSalary" jdbcType="INTEGER" />
-        <result column="meeting_date" property="meetingDate" jdbcType="TIMESTAMP" />
-        <result column="meeting_starttime" property="meetingStarttime" jdbcType="TIMESTAMP" />
-        <result column="meeting_timelong" property="meetingTimelong" jdbcType="DOUBLE" />
-        <result column="meeting_endtime" property="meetingEndtime" jdbcType="TIMESTAMP" />
-        <result column="meeting_address" property="meetingAddress" jdbcType="VARCHAR" />
-        <result column="meeting_alladdress" property="meetingAlladdress" jdbcType="VARCHAR" />
-        <result column="meeting_describe" property="meetingDescribe" jdbcType="VARCHAR" />
-        <result column="meeting_checkstatus" property="meetingCheckstatus" jdbcType="INTEGER" />
-        <result column="meeting_status" property="meetingStatus" jdbcType="INTEGER" />
-        <result column="user_id" property="userId" jdbcType="INTEGER" />
-        <result column="meeting_applypersonnumber" property="meetingApplypersonnumber" jdbcType="INTEGER" />
-        <result column="meeting_signpersonnumber" property="meetingSignpersonnumber" jdbcType="INTEGER" />
-        <result column="start_type" property="startType" jdbcType="INTEGER" />
+    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Meeting">
+        <id column="meeting_id" property="meetingId" jdbcType="INTEGER"/>
+        <result column="meeting_type" property="meetingType" jdbcType="INTEGER"/>
+        <result column="meeting_name" property="meetingName" jdbcType="VARCHAR"/>
+        <result column="meeting_create" property="meetingCreate" jdbcType="VARCHAR"/>
+        <result column="meeting_salary" property="meetingSalary" jdbcType="INTEGER"/>
+        <result column="meeting_date" property="meetingDate" jdbcType="TIMESTAMP"/>
+        <result column="meeting_starttime" property="meetingStarttime" jdbcType="TIMESTAMP"/>
+        <result column="meeting_timelong" property="meetingTimelong" jdbcType="DOUBLE"/>
+        <result column="meeting_endtime" property="meetingEndtime" jdbcType="TIMESTAMP"/>
+        <result column="meeting_address" property="meetingAddress" jdbcType="VARCHAR"/>
+        <result column="meeting_alladdress" property="meetingAlladdress" jdbcType="VARCHAR"/>
+        <result column="meeting_describe" property="meetingDescribe" jdbcType="VARCHAR"/>
+        <result column="meeting_checkstatus" property="meetingCheckstatus" jdbcType="INTEGER"/>
+        <result column="meeting_status" property="meetingStatus" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="meeting_applypersonnumber" property="meetingApplypersonnumber" jdbcType="INTEGER"/>
+        <result column="meeting_signpersonnumber" property="meetingSignpersonnumber" jdbcType="INTEGER"/>
+        <result column="start_type" property="startType" jdbcType="INTEGER"/>
     </resultMap>
 
 
-    <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
         `meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`meeting_checkstatus`,`meeting_status`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`,`start_type`
     </sql>
 
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from `meeting`
         where `meeting_id` = #{meetingId,jdbcType=INTEGER}
     </delete>
 
 
     <!-- 普通新建 孙克强 -->
-    <insert id="insert" parameterType="com.suixingpay.entity.Meeting" >
+    <insert id="insert" parameterType="com.suixingpay.entity.Meeting">
         insert into `meeting` (`meeting_id`,`meeting_type`,`meeting_name`,`meeting_create`,`meeting_salary`,`meeting_date`,`meeting_starttime`,`meeting_timelong`,`meeting_endtime`,`meeting_address`,`meeting_alladdress`,`meeting_describe`,`user_id`,`meeting_applypersonnumber`,`meeting_signpersonnumber`,`start_type`)
-        values (#{meetingId,jdbcType=INTEGER},#{meetingType,jdbcType=INTEGER},#{meetingName,jdbcType=VARCHAR},#{meetingCreate,jdbcType=VARCHAR},#{meetingSalary,jdbcType=INTEGER},#{meetingDate,jdbcType=TIMESTAMP},#{meetingStarttime,jdbcType=TIMESTAMP},#{meetingTimelong,jdbcType=DOUBLE},#{meetingEndtime,jdbcType=TIMESTAMP},#{meetingAddress,jdbcType=VARCHAR},#{meetingAlladdress,jdbcType=VARCHAR},#{meetingDescribe,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{meetingApplypersonnumber,jdbcType=INTEGER},#{meetingSignpersonnumber,jdbcType=INTEGER},#{startType,jdbcType=INTEGER})
+        values (#{meetingId,jdbcType=INTEGER},#{meetingType,jdbcType=INTEGER},#{meetingName,jdbcType=VARCHAR},#{meetingCreate,jdbcType=VARCHAR},#{meetingSalary,jdbcType=INTEGER},#{meetingDate,jdbcType=TIMESTAMP},#{meetingStarttime,jdbcType=TIMESTAMP},#{meetingTimelong,jdbcType=DOUBLE},#{meetingEndtime,jdbcType=TIMESTAMP},#{meetingAddress,jdbcType=VARCHAR},#{meetingAlladdress,jdbcType=VARCHAR},#{meetingDescribe,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{meetingApplypersonnumber,jdbcType=INTEGER},#{meetingSignpersonnumber,jdbcType=INTEGER},0)
     </insert>
 
     <!--李常昊改-->
-    <insert id="insertSelective" parameterType="com.suixingpay.entity.Meeting" >
+    <insert id="insertSelective" parameterType="com.suixingpay.entity.Meeting">
         insert into `meeting`
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="meetingId != null or meetingId == 0" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="meetingId != null or meetingId == 0">
                 `meeting_id`,
             </if>
-            <if test="meetingType != null or meetingType == 0" >
+            <if test="meetingType != null or meetingType == 0">
                 `meeting_type`,
             </if>
-            <if test="meetingName != null" >
+            <if test="meetingName != null">
                 `meeting_name`,
             </if>
-            <if test="meetingCreate != null" >
+            <if test="meetingCreate != null">
                 `meeting_create`,
             </if>
-            <if test="meetingSalary != null or meetingSalary == 0" >
+            <if test="meetingSalary != null or meetingSalary == 0">
                 `meeting_salary`,
             </if>
-            <if test="meetingDate != null" >
+            <if test="meetingDate != null">
                 `meeting_date`,
             </if>
-            <if test="meetingStarttime != null" >
+            <if test="meetingStarttime != null">
                 `meeting_starttime`,
             </if>
-            <if test="meetingTimelong != null" >
+            <if test="meetingTimelong != null">
                 `meeting_timelong`,
             </if>
-            <if test="meetingEndtime != null" >
+            <if test="meetingEndtime != null">
                 `meeting_endtime`,
             </if>
-            <if test="meetingAddress != null" >
+            <if test="meetingAddress != null">
                 `meeting_address`,
             </if>
-            <if test="meetingAlladdress != null" >
+            <if test="meetingAlladdress != null">
                 `meeting_alladdress`,
             </if>
-            <if test="meetingDescribe != null" >
+            <if test="meetingDescribe != null">
                 `meeting_describe`,
             </if>
-            <if test="meetingCheckstatus != null or meetingCheckstatus == 0" >
+            <if test="meetingCheckstatus != null or meetingCheckstatus == 0">
                 `meeting_checkstatus`,
             </if>
-            <if test="meetingStatus != null or meetingStatus == 0" >
+            <if test="meetingStatus != null or meetingStatus == 0">
                 `meeting_status`,
             </if>
-            <if test="userId != null or userId == 0" >
+            <if test="userId != null or userId == 0">
                 `user_id`,
             </if>
-            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0" >
+            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0">
                 `meeting_applypersonnumber`,
             </if>
-            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
+            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0">
                 `meeting_signpersonnumber`,
             </if>
-            <if test="startType != null or startType == 0" >
+            <if test="startType != null or startType == 0">
                 `start_type`,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="meetingId != null or meetingId == 0" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="meetingId != null or meetingId == 0">
                 #{meetingId,jdbcType=INTEGER},
             </if>
-            <if test="meetingType != null or meetingType == 0" >
+            <if test="meetingType != null or meetingType == 0">
                 #{meetingType,jdbcType=INTEGER},
             </if>
-            <if test="meetingName != null" >
+            <if test="meetingName != null">
                 #{meetingName,jdbcType=VARCHAR},
             </if>
-            <if test="meetingCreate != null" >
+            <if test="meetingCreate != null">
                 #{meetingCreate,jdbcType=VARCHAR},
             </if>
-            <if test="meetingSalary != null or meetingSalary == 0" >
+            <if test="meetingSalary != null or meetingSalary == 0">
                 #{meetingSalary,jdbcType=INTEGER},
             </if>
-            <if test="meetingDate != null" >
+            <if test="meetingDate != null">
                 #{meetingDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="meetingStarttime != null" >
+            <if test="meetingStarttime != null">
                 #{meetingStarttime,jdbcType=TIMESTAMP},
             </if>
-            <if test="meetingTimelong != null" >
+            <if test="meetingTimelong != null">
                 #{meetingTimelong,jdbcType=DOUBLE},
             </if>
-            <if test="meetingEndtime != null" >
+            <if test="meetingEndtime != null">
                 #{meetingEndtime,jdbcType=TIMESTAMP},
             </if>
-            <if test="meetingAddress != null" >
+            <if test="meetingAddress != null">
                 #{meetingAddress,jdbcType=VARCHAR},
             </if>
-            <if test="meetingAlladdress != null" >
+            <if test="meetingAlladdress != null">
                 #{meetingAlladdress,jdbcType=VARCHAR},
             </if>
-            <if test="meetingDescribe != null" >
+            <if test="meetingDescribe != null">
                 #{meetingDescribe,jdbcType=VARCHAR},
             </if>
-            <if test="meetingCheckstatus != null or meetingCheckstatus == 0" >
+            <if test="meetingCheckstatus != null or meetingCheckstatus == 0">
                 #{meetingCheckstatus,jdbcType=INTEGER},
             </if>
-            <if test="meetingStatus != null or meetingStatus == 0" >
+            <if test="meetingStatus != null or meetingStatus == 0">
                 #{meetingStatus,jdbcType=INTEGER},
             </if>
-            <if test="userId != null or userId == 0" >
+            <if test="userId != null or userId == 0">
                 #{userId,jdbcType=INTEGER},
             </if>
-            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0" >
+            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0">
                 #{meetingApplypersonnumber,jdbcType=INTEGER},
             </if>
-            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
+            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0">
                 #{meetingSignpersonnumber,jdbcType=INTEGER},
             </if>
-            <if test="startType != null or startType == 0" >
+            <if test="startType != null or startType == 0">
                 #{startType,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
 
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.suixingpay.entity.Meeting" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.suixingpay.entity.Meeting">
         update `meeting`
-        <set >
-            <if test="meetingType != null or meetingType == 0" >
+        <set>
+            <if test="meetingType != null or meetingType == 0">
                 `meeting_type` = #{meetingType,jdbcType=INTEGER},
             </if>
-            <if test="meetingName != null" >
+            <if test="meetingName != null">
                 `meeting_name` = #{meetingName,jdbcType=VARCHAR},
             </if>
-            <if test="meetingCreate != null" >
+            <if test="meetingCreate != null">
                 `meeting_create` = #{meetingCreate,jdbcType=VARCHAR},
             </if>
-            <if test="meetingSalary != null or meetingSalary == 0" >
+            <if test="meetingSalary != null or meetingSalary == 0">
                 `meeting_salary` = #{meetingSalary,jdbcType=INTEGER},
             </if>
-            <if test="meetingDate != null" >
+            <if test="meetingDate != null">
                 `meeting_date` = #{meetingDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="meetingStarttime != null" >
+            <if test="meetingStarttime != null">
                 `meeting_starttime` = #{meetingStarttime,jdbcType=TIMESTAMP},
             </if>
-            <if test="meetingTimelong != null" >
+            <if test="meetingTimelong != null">
                 `meeting_timelong` = #{meetingTimelong,jdbcType=DOUBLE},
             </if>
-            <if test="meetingEndtime != null" >
+            <if test="meetingEndtime != null">
                 `meeting_endtime` = #{meetingEndtime,jdbcType=TIMESTAMP},
             </if>
-            <if test="meetingAddress != null" >
+            <if test="meetingAddress != null">
                 `meeting_address` = #{meetingAddress,jdbcType=VARCHAR},
             </if>
-            <if test="meetingAlladdress != null" >
+            <if test="meetingAlladdress != null">
                 `meeting_alladdress` = #{meetingAlladdress,jdbcType=VARCHAR},
             </if>
-            <if test="meetingDescribe != null" >
+            <if test="meetingDescribe != null">
                 `meeting_describe` = #{meetingDescribe,jdbcType=VARCHAR},
             </if>
-            <if test="meetingCheckstatus != null or meetingCheckstatus == 0" >
+            <if test="meetingCheckstatus != null or meetingCheckstatus == 0">
                 `meeting_checkstatus` = #{meetingCheckstatus,jdbcType=INTEGER},
             </if>
-            <if test="meetingStatus != null or meetingStatus == 0" >
+            <if test="meetingStatus != null or meetingStatus == 0">
                 `meeting_status` = #{meetingStatus,jdbcType=INTEGER},
             </if>
-            <if test="userId != null or userId == 0" >
+            <if test="userId != null or userId == 0">
                 `user_id` = #{userId,jdbcType=INTEGER},
             </if>
-            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0" >
+            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0">
                 `meeting_applypersonnumber` = #{meetingApplypersonnumber,jdbcType=INTEGER},
             </if>
-            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
+            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0">
                 `meeting_signpersonnumber` = #{meetingSignpersonnumber,jdbcType=INTEGER},
             </if>
-            <if test="startType != null or startType == 0" >
+            <if test="startType != null or startType == 0">
                 `start_type` = #{startType,jdbcType=INTEGER},
             </if>
         </set>
@@ -218,7 +218,7 @@
     </update>
 
 
-    <update id="updateByPrimaryKey" parameterType="com.suixingpay.entity.Meeting" >
+    <update id="updateByPrimaryKey" parameterType="com.suixingpay.entity.Meeting">
         update `meeting` set
         `meeting_type` = #{meetingType,jdbcType=INTEGER},
         `meeting_name` = #{meetingName,jdbcType=VARCHAR},
@@ -241,68 +241,68 @@
     </update>
 
 
-    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `meeting`
+        <include refid="Base_Column_List"/>
+        from `meeting`
         where `meeting_id` = #{meetingId,jdbcType=INTEGER}
     </select>
 
 
-    <sql id="findPageWithWhere" >
-        <where> 1=1
-            <if test="meetingId != null or meetingId == 0" >
+    <sql id="findPageWithWhere">
+        <where>1=1
+            <if test="meetingId != null or meetingId == 0">
                 and `meeting_id` = #{meetingId,jdbcType=INTEGER}
             </if>
-            <if test="meetingType != null or meetingType == 0" >
+            <if test="meetingType != null or meetingType == 0">
                 and `meeting_type` = #{meetingType,jdbcType=INTEGER}
             </if>
-            <if test="meetingName != null" >
+            <if test="meetingName != null">
                 and `meeting_name` = #{meetingName,jdbcType=VARCHAR}
             </if>
-            <if test="meetingCreate != null" >
+            <if test="meetingCreate != null">
                 and `meeting_create` = #{meetingCreate,jdbcType=VARCHAR}
             </if>
-            <if test="meetingSalary != null or meetingSalary == 0" >
+            <if test="meetingSalary != null or meetingSalary == 0">
                 and `meeting_salary` = #{meetingSalary,jdbcType=INTEGER}
             </if>
-            <if test="meetingDate != null" >
+            <if test="meetingDate != null">
                 and `meeting_date` = #{meetingDate,jdbcType=TIMESTAMP}
             </if>
-            <if test="meetingStarttime != null" >
+            <if test="meetingStarttime != null">
                 and `meeting_starttime` = #{meetingStarttime,jdbcType=TIMESTAMP}
             </if>
-            <if test="meetingTimelong != null" >
+            <if test="meetingTimelong != null">
                 and `meeting_timelong` = #{meetingTimelong,jdbcType=DOUBLE}
             </if>
-            <if test="meetingEndtime != null" >
+            <if test="meetingEndtime != null">
                 and `meeting_endtime` = #{meetingEndtime,jdbcType=TIMESTAMP}
             </if>
-            <if test="meetingAddress != null" >
+            <if test="meetingAddress != null">
                 and `meeting_address` = #{meetingAddress,jdbcType=VARCHAR}
             </if>
-            <if test="meetingAlladdress != null" >
+            <if test="meetingAlladdress != null">
                 and `meeting_alladdress` = #{meetingAlladdress,jdbcType=VARCHAR}
             </if>
-            <if test="meetingDescribe != null" >
+            <if test="meetingDescribe != null">
                 and `meeting_describe` = #{meetingDescribe,jdbcType=VARCHAR}
             </if>
-            <if test="meetingCheckstatus != null or meetingCheckstatus == 0" >
+            <if test="meetingCheckstatus != null or meetingCheckstatus == 0">
                 and `meeting_checkstatus` = #{meetingCheckstatus,jdbcType=INTEGER}
             </if>
-            <if test="meetingStatus != null or meetingStatus == 0" >
+            <if test="meetingStatus != null or meetingStatus == 0">
                 and `meeting_status` = #{meetingStatus,jdbcType=INTEGER}
             </if>
-            <if test="userId != null or userId == 0" >
+            <if test="userId != null or userId == 0">
                 and `user_id` = #{userId,jdbcType=INTEGER}
             </if>
-            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0" >
+            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0">
                 and `meeting_applypersonnumber` = #{meetingApplypersonnumber,jdbcType=INTEGER}
             </if>
-            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
+            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0">
                 and `meeting_signpersonnumber` = #{meetingSignpersonnumber,jdbcType=INTEGER}
             </if>
-            <if test="startType != null or startType == 0" >
+            <if test="startType != null or startType == 0">
                 and `start_type` = #{startType,jdbcType=INTEGER}
             </if>
 
@@ -354,10 +354,12 @@
                         and `user_id` like concat('%', #{likes.userId,jdbcType=INTEGER}, '%')
                     </if>
                     <if test='k == "meetingApplypersonnumber" and likes[k] != null'>
-                        and `meeting_applypersonnumber` like concat('%', #{likes.meetingApplypersonnumber,jdbcType=INTEGER}, '%')
+                        and `meeting_applypersonnumber` like concat('%',
+                        #{likes.meetingApplypersonnumber,jdbcType=INTEGER}, '%')
                     </if>
                     <if test='k == "meetingSignpersonnumber" and likes[k] != null'>
-                        and `meeting_signpersonnumber` like concat('%', #{likes.meetingSignpersonnumber,jdbcType=INTEGER}, '%')
+                        and `meeting_signpersonnumber` like concat('%',
+                        #{likes.meetingSignpersonnumber,jdbcType=INTEGER}, '%')
                     </if>
                     <if test='k == "startType" and likes[k] != null'>
                         and `start_type` like concat('%', #{likes.startType,jdbcType=INTEGER}, '%')
@@ -386,109 +388,127 @@
                 <foreach collection="includes.keys" item="k" separator=" ">
                     <if test='k == "meetingId" and includes[k] != null'>
                         and `meeting_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingType" and includes[k] != null'>
                         and `meeting_type` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingName" and includes[k] != null'>
                         and `meeting_name` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingCreate" and includes[k] != null'>
                         and `meeting_create` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingSalary" and includes[k] != null'>
                         and `meeting_salary` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingDate" and includes[k] != null'>
                         and `meeting_date` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingStarttime" and includes[k] != null'>
                         and `meeting_starttime` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingTimelong" and includes[k] != null'>
                         and `meeting_timelong` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingEndtime" and includes[k] != null'>
                         and `meeting_endtime` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingAddress" and includes[k] != null'>
                         and `meeting_address` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingAlladdress" and includes[k] != null'>
                         and `meeting_alladdress` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingDescribe" and includes[k] != null'>
                         and `meeting_describe` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingCheckstatus" and includes[k] != null'>
                         and `meeting_checkstatus` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingStatus" and includes[k] != null'>
                         and `meeting_status` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "userId" and includes[k] != null'>
                         and `user_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingApplypersonnumber" and includes[k] != null'>
                         and `meeting_applypersonnumber` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "meetingSignpersonnumber" and includes[k] != null'>
                         and `meeting_signpersonnumber` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "startType" and includes[k] != null'>
                         and `start_type` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
@@ -497,57 +517,57 @@
         </where>
     </sql>
 
-    <sql id="findPageWithWhereLike" >
-        <where> 1=1
-            <if test="meetingId != null or meetingId == 0" >
+    <sql id="findPageWithWhereLike">
+        <where>1=1
+            <if test="meetingId != null or meetingId == 0">
                 and `meeting_id` like concat('%', #{meetingId,jdbcType=INTEGER}, '%')
             </if>
-            <if test="meetingType != null or meetingType == 0" >
+            <if test="meetingType != null or meetingType == 0">
                 and `meeting_type` like concat('%', #{meetingType,jdbcType=INTEGER}, '%')
             </if>
-            <if test="meetingName != null" >
+            <if test="meetingName != null">
                 and `meeting_name` like concat('%', #{meetingName,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="meetingCreate != null" >
+            <if test="meetingCreate != null">
                 and `meeting_create` like concat('%', #{meetingCreate,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="meetingSalary != null or meetingSalary == 0" >
+            <if test="meetingSalary != null or meetingSalary == 0">
                 and `meeting_salary` like concat('%', #{meetingSalary,jdbcType=INTEGER}, '%')
             </if>
-            <if test="meetingStarttime != null" >
+            <if test="meetingStarttime != null">
                 and `meeting_starttime` like concat('%', #{meetingStarttime,jdbcType=TIMESTAMP}, '%')
             </if>
-            <if test="meetingTimelong != null" >
+            <if test="meetingTimelong != null">
                 and `meeting_timelong` like concat('%', #{meetingTimelong,jdbcType=DOUBLE}, '%')
             </if>
-            <if test="meetingEndtime != null" >
+            <if test="meetingEndtime != null">
                 and `meeting_endtime` like concat('%', #{meetingEndtime,jdbcType=TIMESTAMP}, '%')
             </if>
-            <if test="meetingAddress != null" >
+            <if test="meetingAddress != null">
                 and `meeting_address` like concat('%', #{meetingAddress,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="meetingAlladdress != null" >
+            <if test="meetingAlladdress != null">
                 and `meeting_alladdress` like concat('%', #{meetingAlladdress,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="meetingDescribe != null" >
+            <if test="meetingDescribe != null">
                 and `meeting_describe` like concat('%', #{meetingDescribe,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="meetingCheckstatus != null or meetingCheckstatus == 0" >
+            <if test="meetingCheckstatus != null or meetingCheckstatus == 0">
                 and `meeting_checkstatus` like concat('%', #{meetingCheckstatus,jdbcType=INTEGER}, '%')
             </if>
-            <if test="meetingStatus != null or meetingStatus == 0" >
+            <if test="meetingStatus != null or meetingStatus == 0">
                 and `meeting_status` like concat('%', #{meetingStatus,jdbcType=INTEGER}, '%')
             </if>
-            <if test="userId != null or userId == 0" >
+            <if test="userId != null or userId == 0">
                 and `user_id` like concat('%', #{userId,jdbcType=INTEGER}, '%')
             </if>
-            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0" >
+            <if test="meetingApplypersonnumber != null or meetingApplypersonnumber == 0">
                 and `meeting_applypersonnumber` like concat('%', #{meetingApplypersonnumber,jdbcType=INTEGER}, '%')
             </if>
-            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0" >
+            <if test="meetingSignpersonnumber != null or meetingSignpersonnumber == 0">
                 and `meeting_signpersonnumber` like concat('%', #{meetingSignpersonnumber,jdbcType=INTEGER}, '%')
             </if>
-            <if test="startType != null or startType == 0" >
+            <if test="startType != null or startType == 0">
                 and `start_type` like concat('%', #{startType,jdbcType=INTEGER}, '%')
             </if>
         </where>
@@ -555,7 +575,7 @@
 
 
     <sql id="findPageWithOrder">
-        <if test="null != orders" >
+        <if test="null != orders">
             ORDER BY
             <foreach collection="orders.keys" item="k" separator=",">
                 <if test='k == "meetingId"'>
@@ -623,61 +643,60 @@
     </sql>
 
 
-    <select id="findOne" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap" >
+    <select id="findOne" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `meeting`
-        <include refid="findPageWithWhere" />
+        <include refid="Base_Column_List"/>
+        from `meeting`
+        <include refid="findPageWithWhere"/>
         limit 1
     </select>
 
 
-    <select id="findAllWithResult" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap" >
+    <select id="findAllWithResult" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `meeting`
-        <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
+        <include refid="Base_Column_List"/>
+        from `meeting`
+        <include refid="findPageWithWhere"/>
+        <include refid="findPageWithOrder"/>
     </select>
 
 
-    <select id="findPageWithResult" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap" >
+    <select id="findPageWithResult" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `meeting`
-        <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
+        <include refid="Base_Column_List"/>
+        from `meeting`
+        <include refid="findPageWithWhere"/>
+        <include refid="findPageWithOrder"/>
         limit #{start},#{pageSize}
     </select>
 
 
-    <select id="findPageWithCount" parameterType="com.suixingpay.entity.Meeting" resultType="java.lang.Integer" >
+    <select id="findPageWithCount" parameterType="com.suixingpay.entity.Meeting" resultType="java.lang.Integer">
         select count(1)
         from `meeting`
-        <include refid="findPageWithWhere" />
+        <include refid="findPageWithWhere"/>
     </select>
 
-    <select id="findMeetingWithLike" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap" >
+    <select id="findMeetingWithLike" parameterType="com.suixingpay.entity.Meeting" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `meeting`
-        <include refid="findPageWithWhereLike" />
+        <include refid="Base_Column_List"/>
+        from `meeting`
+        <include refid="findPageWithWhereLike"/>
     </select>
 
 
-    <select id="findPageWithCountLike" parameterType="com.suixingpay.entity.Meeting" resultType="java.lang.Integer" >
+    <select id="findPageWithCountLike" parameterType="com.suixingpay.entity.Meeting" resultType="java.lang.Integer">
         select count(1)
         from `meeting`
-        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithWhereLike"/>
     </select>
 
     <select id="limitDate" parameterType="date" resultType="com.suixingpay.entity.Meeting">
         select
         <include refid="Base_Column_List"/>
         from `meeting`
-        where  `meeting_date` between #{beginDate} and #{endDate}
+        where `meeting_date` between #{beginDate} and #{endDate}
     </select>
-
 
 
     <update id="updatemeetingStatus" parameterType="int">
@@ -688,7 +707,8 @@
     <!--
       柴宇航
     -->
-    <select id="selectstartTimeandtimeLong" parameterType="com.suixingpay.entity.Meeting" resultType="com.suixingpay.entity.Meeting">
+    <select id="selectstartTimeandtimeLong" parameterType="com.suixingpay.entity.Meeting"
+            resultType="com.suixingpay.entity.Meeting">
         select meeting_starttime,meeting_timelong from meeting where meeting_id=#{meetingId}
     </select>
     <!--
@@ -708,20 +728,20 @@
         <id column="apply_id" property="applyId" jdbcType="INTEGER"></id>
         <result column="apply_time" property="applyTime" javaType="java.util.Date"></result>
         <collection property="usersList" ofType="com.suixingpay.entity.Users">
-            <id column="id" property="id" jdbcType="INTEGER" />
-            <result column="user_name" property="userName" jdbcType="VARCHAR" />
-            <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
     <!-- 查看会议报名信息 孙克强 -->
     <select id="selectApplyByMeetingId" parameterType="int" resultMap="applyUsersMeetingMap">
         SELECT u.user_name,u.telephone,a.apply_time
         FROM apply a JOIN users u  ON a.user_id = u.id JOIN meeting m ON a.meeting_id = m.meeting_id
-        WHERE a.meeting_id = 1
+        WHERE a.meeting_id = #{meetingId}
     </select>
 
     <!--  石梦瑶 查询父类的用户id  -->
-    <select id="selectRootId" parameterType="java.lang.String" resultType="java.lang.String" >
+    <select id="selectRootId" parameterType="java.lang.String" resultType="java.lang.String">
        select root_user_id from users where user_id = #{userId}
     </select>
 
@@ -740,6 +760,18 @@
         (select meeting_id from apply where user_id=#{userId})
     </select>
 
+    <select id="selectMeetings3" resultType="com.suixingpay.entity.Meeting" parameterType="java.lang.String">
+        select m.* from meeting m LEFT JOIN apply a on m.meeting_id = a.meeting_id where m.meeting_id not in
+        (select meeting_id from apply) and m.user_id = #{userId} and m.meeting_endtime > #{date}
+        and meeting_checkstatus = 2
+    </select>
+
+    <select id="selectMeetings4" resultType="com.suixingpay.entity.Meeting" parameterType="java.lang.String">
+        select m.* from meeting m LEFT JOIN apply a on m.meeting_id = a.meeting_id where m.meeting_id not in
+        (select meeting_id from apply) and m.user_id = -1 and m.meeting_endtime > #{date}
+        and meeting_checkstatus = 2
+    </select>
+
     <!-- 自定义根据id修改会议 孙克强 -->
     <update id="myUpdateMeetingById" parameterType="com.suixingpay.entity.Meeting">
         update `meeting` set `meeting_checkstatus` = #{meetingCheckstatus},`meeting_type` = #{meetingType},
@@ -751,7 +783,7 @@
     </update>
 
     <!--  石梦瑶 查询这个鑫管家已经报名的活动-->
-    <select id="selectisapply" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="selectisapply" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         m.*
         from  `meeting` as m left join apply a on m.meeting_id=a.meeting_id
@@ -759,18 +791,17 @@
     </select>
 
     <!-- 石梦瑶 查询详情   -->
-    <select id="selectByIddesc" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="selectByIddesc" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `meeting`
+        <include refid="Base_Column_List"/>
+        from `meeting`
         where `meeting_id` = #{meetingId,jdbcType=INTEGER}
     </select>
 
 
+    <!--管理页面-->
 
-<!--管理页面-->
-
-    <select id="selectbyuserId" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="selectbyuserId" parameterType="java.lang.String" resultMap="BaseResultMap">
         select m.*
         from meeting m where user_id = #{userId}
         ORDER BY m.meeting_status
@@ -782,9 +813,9 @@
         <id column="sign_id" property="signId" jdbcType="INTEGER"></id>
         <result column="sign_time" property="signTime" javaType="java.util.Date"></result>
         <collection property="usersList" ofType="com.suixingpay.entity.Users">
-            <id column="id" property="id" jdbcType="INTEGER" />
-            <result column="user_name" property="userName" jdbcType="VARCHAR" />
-            <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
     <!-- 查看会议签到信息 孙克强 -->
@@ -793,8 +824,6 @@
         FROM `sign` s JOIN `users` u  ON s.user_id = u.id JOIN `meeting` m ON s.meeting_id = m.meeting_id
         WHERE s.meeting_id = #{meetingId}
     </select>
-
-
 
 
 </mapper>

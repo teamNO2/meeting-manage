@@ -104,9 +104,9 @@ public class HousekeeperController {
             return () -> GenericResponse.failed("999", "修改失败,报名截止时间不能小于当前时间");
         }
         //如果报名截止时间不大于会议时间，失败
-        if (meetingEndtime.before(meetingStarttime)) {
-            log.info("修改失败,报名截止时间不能小于会议开始时间");
-            return () -> GenericResponse.failed("999", "修改失败,报名截止时间不能小于会议开始时间");
+        if (meetingEndtime.after(meetingStarttime)) {
+            log.info("新建失败,报名截止时间不能大于会议开始时间");
+            return () -> GenericResponse.failed("999", "新建失败,报名截止时间不能大于会议开始时间");
         }
 
         int i = housekeeperService.myUpdateMeetingById(meeting);
